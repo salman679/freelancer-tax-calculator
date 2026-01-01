@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import {
   Calculator,
   ArrowLeft,
@@ -25,7 +25,7 @@ import { PaidResult } from "@/components/PaidResult";
 type CalculationStep = "input" | "free-result" | "premium-result";
 export type BenefitTier = "detailed" | "planning";
 
-export default function CalculatorPage() {
+function CalculatorContent() {
   const searchParams = useSearchParams();
   const [step, setStep] = useState<CalculationStep>("input");
   const [input, setInput] = useState<TaxInput>({
@@ -433,5 +433,19 @@ function SignupModal({ onClose, onSubmit, loading, tier }: SignupModalProps) {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function CalculatorPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      }
+    >
+      <CalculatorContent />
+    </Suspense>
   );
 }
