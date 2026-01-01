@@ -23,7 +23,7 @@ import { FreeResult } from "@/components/FreeResult";
 import { PaidResult } from "@/components/PaidResult";
 
 type CalculationStep = "input" | "free-result" | "premium-result";
-type BenefitTier = "detailed" | "planning";
+export type BenefitTier = "detailed" | "planning";
 
 export default function CalculatorPage() {
   const searchParams = useSearchParams();

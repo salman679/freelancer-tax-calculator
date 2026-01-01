@@ -1,254 +1,856 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Calculator,
   CheckCircle,
   FileText,
   Shield,
   TrendingUp,
+  DollarSign,
+  Users,
+  Lock,
+  Zap,
+  Award,
+  ArrowRight,
+  Star,
+  BarChart3,
 } from "lucide-react";
-import Link from "next/link";
+import {
+  calculateTax,
+  formatCurrency,
+  type TaxInput,
+  type TaxResult,
+} from "@/lib/tax-calculator";
+import { FreeResult } from "@/components/FreeResult";
+import { PaidResult } from "@/components/PaidResult";
+import type { BenefitTier } from "./calculator/page";
+
+type CalculationStep = "input" | "free-result" | "premium-result";
+type TierInfo = {
+  detailed: string;
+  planning: string;
+};
 
 export default function HomePage() {
+  const [step, setStep] = useState<CalculationStep>("input");
+  const [input, setInput] = useState<TaxInput>({
+    annualIncome: 0,
+    incomeSource: "foreign",
+    expenses: 0,
+  });
+  const [result, setResult] = useState<TaxResult | null>(null);
+  const [benefitTier, setBenefitTier] = useState<BenefitTier>("detailed");
+  const [isSignedUp, setIsSignedUp] = useState(false);
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userId, setUserId] = useState<string | null>(null);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    const storedUserId = localStorage.getItem("userId");
+
+    if (storedEmail && storedUserId) {
+      setUserEmail(storedEmail);
+      setUserId(storedUserId);
+      setIsSignedUp(true);
+    }
+  }, []);
+
+  const handleCalculate = () => {
+    const taxResult = calculateTax(input);
+    setResult(taxResult);
+    setStep("free-result");
+
+    // Scroll to results
+    setTimeout(() => {
+      document.getElementById("results-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
+  const handleSignup = (tier: BenefitTier) => {
+    setBenefitTier(tier);
+    setShowSignupModal(true);
+  };
+
+  const handleSignupSubmit = async (email: string, name?: string) => {
+    setSignupLoading(true);
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          name,
+          benefitTier,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.user) {
+        localStorage.setItem("userEmail", data.user.email);
+        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("userBenefitTier", data.user.benefitTier);
+
+        setUserEmail(data.user.email);
+        setUserId(data.user.id);
+        setIsSignedUp(true);
+        setShowSignupModal(false);
+        setStep("premium-result");
+
+        if (result) {
+          await saveCalculation(data.user.id);
+        }
+      } else {
+        alert("Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setSignupLoading(false);
+    }
+  };
+
+  const saveCalculation = async (userIdParam?: string) => {
+    if (!result) return;
+
+    try {
+      await fetch("/api/calculations/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userIdParam || userId,
+          annualIncome: input.annualIncome,
+          incomeSource: input.incomeSource,
+          expenses: input.expenses,
+          estimatedTax: result.estimatedTax,
+          taxableIncome: result.taxableIncome,
+          filingRequired: result.filingRequired,
+          riskLevel: result.riskLevel,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to save calculation:", error);
+    }
+  };
+
+  const resetCalculation = () => {
+    setStep("input");
+    setResult(null);
+    setInput({
+      annualIncome: 0,
+      incomeSource: "foreign",
+      expenses: 0,
+    });
+
+    // Scroll to calculator
+    setTimeout(() => {
+      document.getElementById("calculator-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Navigation */}
-      <nav className="bg-white border-b shadow-sm">
+      <nav className="sticky top-0 z-40 border-b shadow-sm bg-white/80 backdrop-blur-md">
         <div className="py-4 container-custom">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Calculator className="w-8 h-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-primary-600 to-purple-600">
+                <Calculator className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-xl font-bold text-transparent bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text">
                 FreelancerTax.BD
               </span>
             </div>
-            <Link href="/calculator" className="btn-primary">
-              Calculate Now
-            </Link>
+            <div className="flex items-center space-x-4">
+              {isSignedUp && (
+                <span className="hidden text-sm text-gray-600 sm:block">
+                  👋 {userEmail}
+                </span>
+              )}
+              <button
+                onClick={() => {
+                  document
+                    .getElementById("calculator-section")
+                    ?.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                }}
+                className="btn-primary"
+              >
+                Calculate Now
+              </button>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-12 lg:py-20">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="mb-6 text-4xl font-bold text-gray-900 lg:text-6xl">
-              Freelancer Tax Calculator for{" "}
-              <span className="text-primary-600">Bangladesh</span>
+            <div className="inline-flex items-center px-4 py-2 mb-6 space-x-2 text-sm font-medium rounded-full bg-primary-100 text-primary-700">
+              <Zap className="w-4 h-4" />
+              <span>Trusted by 1000+ Bangladesh Freelancers</span>
+            </div>
+            <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-900 lg:text-6xl">
+              Calculate Your Freelancer Tax in{" "}
+              <span className="text-transparent bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text">
+                30 Seconds
+              </span>
             </h1>
             <p className="mb-8 text-xl leading-relaxed text-gray-600">
-              Stop worrying about your tax obligations. Get clear answers about
-              whether you need to pay tax, file returns, and how much you might
-              owe. Simple, reliable, and built for Bangladesh freelancers.
+              Get instant, accurate tax estimates for your freelance income. No
+              signup required. 100% free basic calculation.
             </p>
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href="/calculator"
-                className="px-8 py-3 text-lg btn-primary"
-              >
-                Calculate Your Tax - Free
-              </Link>
-              <button className="px-8 py-3 text-lg btn-secondary">
-                See How It Works
-              </button>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
+              <div className="flex items-center space-x-2 text-gray-600">
+                <Shield className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium">Secure & Private</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-600">
+                <Zap className="w-5 h-5 text-yellow-600" />
+                <span className="text-sm font-medium">Instant Results</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-600">
+                <CheckCircle className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-medium">100% Free</span>
+              </div>
             </div>
-            <p className="mt-4 text-sm text-gray-500">
-              ✅ Free basic calculation • ✅ No signup required • ✅ Instant
-              results
-            </p>
+
+            {/* Stats */}
+            <div className="grid max-w-2xl grid-cols-3 gap-4 mx-auto mb-8">
+              <div className="p-4 border border-gray-200 rounded-lg bg-white/60 backdrop-blur-sm">
+                <div className="text-2xl font-bold text-primary-600">1000+</div>
+                <div className="text-sm text-gray-600">Calculations Done</div>
+              </div>
+              <div className="p-4 border border-gray-200 rounded-lg bg-white/60 backdrop-blur-sm">
+                <div className="text-2xl font-bold text-purple-600">30s</div>
+                <div className="text-sm text-gray-600">Average Time</div>
+              </div>
+              <div className="p-4 border border-gray-200 rounded-lg bg-white/60 backdrop-blur-sm">
+                <div className="text-2xl font-bold text-green-600">4.9/5</div>
+                <div className="text-sm text-gray-600">User Rating</div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                document.getElementById("calculator-section")?.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+              className="inline-flex items-center px-8 py-4 space-x-2 text-lg transition-shadow shadow-lg btn-primary hover:shadow-xl"
+            >
+              <span>Start Free Calculation</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Calculator Section */}
+      <section id="calculator-section" className="py-16 bg-white">
+        <div className="container-custom">
+          {step === "input" && (
+            <div className="max-w-3xl mx-auto">
+              <div className="mb-8 text-center">
+                <h2 className="mb-3 text-3xl font-bold text-gray-900">
+                  Calculate Your Tax Now
+                </h2>
+                <p className="text-gray-600">
+                  Enter your income details below to get instant tax estimates
+                </p>
+              </div>
+
+              <div className="p-8 shadow-xl card">
+                <div className="space-y-6">
+                  {/* Annual Income */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Annual Income (৳) *
+                    </label>
+                    <div className="relative">
+                      <DollarSign className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+                      <input
+                        type="number"
+                        value={input.annualIncome || ""}
+                        onChange={(e) =>
+                          setInput({
+                            ...input,
+                            annualIncome: parseFloat(e.target.value) || 0,
+                          })
+                        }
+                        placeholder="Enter your total yearly income"
+                        className="pl-10 input-field"
+                        min="0"
+                        step="1000"
+                      />
+                    </div>
+                    <p className="mt-1 text-xs text-gray-500">
+                      Include income from all sources (Fiverr, Upwork, direct
+                      clients, etc.)
+                    </p>
+                  </div>
+
+                  {/* Income Source */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Primary Income Source *
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setInput({ ...input, incomeSource: "foreign" })
+                        }
+                        className={`p-4 rounded-lg border-2 text-sm font-medium transition-all ${
+                          input.incomeSource === "foreign"
+                            ? "border-primary-500 bg-primary-50 text-primary-700 shadow-md"
+                            : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        🌍 Foreign Clients
+                        <p className="mt-1 text-xs opacity-75">
+                          Upwork, Fiverr, International
+                        </p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setInput({ ...input, incomeSource: "local" })
+                        }
+                        className={`p-4 rounded-lg border-2 text-sm font-medium transition-all ${
+                          input.incomeSource === "local"
+                            ? "border-primary-500 bg-primary-50 text-primary-700 shadow-md"
+                            : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        🇧🇩 Local Clients
+                        <p className="mt-1 text-xs opacity-75">
+                          Bangladesh-based companies
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Expenses */}
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                      Business Expenses (৳)
+                      <span className="font-normal text-gray-400">
+                        {" "}
+                        - Optional
+                      </span>
+                    </label>
+                    <input
+                      type="number"
+                      value={input.expenses || ""}
+                      onChange={(e) =>
+                        setInput({
+                          ...input,
+                          expenses: parseFloat(e.target.value) || 0,
+                        })
+                      }
+                      placeholder="Equipment, software, internet, etc."
+                      className="input-field"
+                      min="0"
+                      step="1000"
+                    />
+                    <p className="mt-1 text-xs text-gray-500">
+                      Legitimate business expenses that may reduce your taxable
+                      income
+                    </p>
+                  </div>
+
+                  {/* Calculate Button */}
+                  <button
+                    onClick={handleCalculate}
+                    disabled={!input.annualIncome}
+                    className="w-full py-4 text-lg font-semibold transition-shadow shadow-lg btn-primary disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl"
+                  >
+                    Calculate My Tax - Free
+                  </button>
+
+                  {/* Trust Indicators */}
+                  <div className="flex items-center justify-center pt-4 space-x-6 border-t">
+                    <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <Lock className="w-4 h-4 text-green-600" />
+                      <span>Secure</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <Zap className="w-4 h-4 text-yellow-600" />
+                      <span>Instant</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gray-600">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span>No Signup</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Disclaimer */}
+              <div className="p-4 mt-6 border border-blue-200 rounded-lg bg-blue-50">
+                <p className="text-sm text-blue-800">
+                  <strong>Important:</strong> This calculator provides estimated
+                  guidance only. Results are not legal or accounting advice.
+                  Consult a licensed professional for official matters.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Results Section */}
+      {(step === "free-result" || step === "premium-result") && (
+        <section id="results-section" className="py-16 bg-gray-50">
+          <div className="container-custom">
+            {step === "free-result" && result && (
+              <FreeResult
+                result={result}
+                input={input}
+                onSignup={handleSignup}
+                onRecalculate={resetCalculation}
+                isSignedUp={isSignedUp}
+              />
+            )}
+
+            {step === "premium-result" && result && (
+              <PaidResult
+                result={result}
+                input={input}
+                tier={benefitTier}
+                onNewCalculation={resetCalculation}
+              />
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900">
-              Built for Bangladesh Freelancers
+              Why Freelancers Trust Us
             </h2>
             <p className="max-w-2xl mx-auto text-gray-600">
-              Whether you work on Fiverr, Upwork, or with direct clients, get
-              the clarity you need about your tax situation.
+              Built specifically for Bangladesh freelancers working on Fiverr,
+              Upwork, and with direct clients
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="text-center">
-              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full">
-                <CheckCircle className="w-8 h-8 text-green-600" />
+            <div className="p-6 text-center border border-green-200 rounded-xl bg-gradient-to-br from-green-50 to-green-100">
+              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-green-500 rounded-full shadow-lg">
+                <Zap className="w-8 h-8 text-white" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Instant Decision</h3>
+              <h3 className="mb-2 text-xl font-semibold text-gray-900">
+                Instant Results
+              </h3>
               <p className="text-gray-600">
-                Get immediate answers: Do you owe tax? Do you need to file?
-                What's your risk level?
+                Get immediate answers about your tax obligations, filing
+                requirements, and risk level in under 30 seconds.
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full">
-                <FileText className="w-8 h-8 text-blue-600" />
+            <div className="p-6 text-center border border-blue-200 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100">
+              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-blue-500 rounded-full shadow-lg">
+                <Shield className="w-8 h-8 text-white" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Detailed Breakdown</h3>
+              <h3 className="mb-2 text-xl font-semibold text-gray-900">
+                100% Private
+              </h3>
               <p className="text-gray-600">
-                Upgrade for slab-wise calculations, PDF reports, and
-                step-by-step explanations.
+                Your data is never shared. We don't store your income
+                information unless you create an account.
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full">
-                <TrendingUp className="w-8 h-8 text-purple-600" />
+            <div className="p-6 text-center border border-purple-200 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100">
+              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-500 rounded-full shadow-lg">
+                <Award className="w-8 h-8 text-white" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Tax Planning</h3>
+              <h3 className="mb-2 text-xl font-semibold text-gray-900">
+                BD Tax Rules
+              </h3>
               <p className="text-gray-600">
-                Get optimization tips, expense planning, and income distribution
-                strategies.
+                Calculations based on official Bangladesh tax regulations and
+                updated regularly.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Preview */}
-      <section className="py-16 bg-gray-50">
+      {/* Testimonials Section */}
+      <section className="py-16 bg-gradient-to-br from-primary-50 to-purple-50">
         <div className="container-custom">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900">
-              Simple, Fair Pricing
+              Trusted by Bangladesh Freelancers
             </h2>
             <p className="text-gray-600">
-              No subscriptions. Pay once, use forever.
+              See what other freelancers are saying
             </p>
           </div>
 
           <div className="grid max-w-5xl grid-cols-1 gap-6 mx-auto md:grid-cols-3">
-            {/* Free Tier */}
-            <div className="p-6 text-center border-2 border-green-200 card">
-              <div className="mb-2 font-semibold text-green-600">FREE</div>
-              <div className="mb-4 text-3xl font-bold">৳0</div>
-              <ul className="mb-6 space-y-3">
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Estimated tax amount</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Filing requirement</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Risk assessment</span>
-                </li>
-              </ul>
-              <Link href="/calculator" className="w-full btn-secondary">
-                Start Free Calculation
-              </Link>
-            </div>
-
-            {/* Basic Paid */}
-            <div className="relative p-6 text-center border-2 border-blue-500 card">
-              <div className="absolute px-3 py-1 text-sm font-medium text-white transform -translate-x-1/2 bg-blue-500 rounded-full -top-3 left-1/2">
-                Most Popular
+            <div className="p-6 bg-white shadow-md rounded-xl">
+              <div className="flex items-center mb-4">
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="mb-2 font-semibold text-blue-600">DETAILED</div>
-              <div className="mb-4 text-3xl font-bold">৳299</div>
-              <ul className="mb-6 space-y-3">
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Everything in Free</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Slab-wise breakdown</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>PDF report</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Action steps</span>
-                </li>
-              </ul>
-              <button className="w-full btn-primary">
-                Unlock Detailed Report
-              </button>
+              <p className="mb-4 text-gray-700">
+                "Finally, a simple way to understand my tax obligations! This
+                saved me hours of confusion."
+              </p>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center w-10 h-10 font-bold text-white rounded-full bg-gradient-to-br from-blue-400 to-blue-600">
+                  R
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">Rafiq Ahmed</div>
+                  <div className="text-sm text-gray-500">Fiverr Seller</div>
+                </div>
+              </div>
             </div>
 
-            {/* Premium */}
-            <div className="p-6 text-center border-2 border-purple-200 card">
-              <div className="mb-2 font-semibold text-purple-600">PLANNING</div>
-              <div className="mb-4 text-3xl font-bold">৳499</div>
-              <ul className="mb-6 space-y-3">
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Everything in Detailed</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Tax-saving tips</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Income planning</span>
-                </li>
-                <li className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Optimization guide</span>
-                </li>
-              </ul>
-              <button className="w-full btn-secondary">
-                Get Planning Guide
-              </button>
+            <div className="p-6 bg-white shadow-md rounded-xl">
+              <div className="flex items-center mb-4">
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="mb-4 text-gray-700">
+                "Accurate calculations and clear explanations. Highly recommend
+                for all freelancers in Bangladesh!"
+              </p>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center w-10 h-10 font-bold text-white rounded-full bg-gradient-to-br from-purple-400 to-purple-600">
+                  S
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">
+                    Sadia Rahman
+                  </div>
+                  <div className="text-sm text-gray-500">Upwork Freelancer</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 bg-white shadow-md rounded-xl">
+              <div className="flex items-center mb-4">
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="mb-4 text-gray-700">
+                "The detailed report helped me plan my taxes properly. Worth
+                every second!"
+              </p>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center w-10 h-10 font-bold text-white rounded-full bg-gradient-to-br from-green-400 to-green-600">
+                  K
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">
+                    Kamal Hossain
+                  </div>
+                  <div className="text-sm text-gray-500">Web Developer</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust Section */}
+      {/* Trust & Security Section */}
       <section className="py-16 bg-white">
-        <div className="text-center container-custom">
-          <div className="flex items-center justify-center mb-4">
-            <Shield className="w-8 h-8 mr-2 text-green-600" />
-            <h3 className="text-2xl font-semibold text-gray-900">
-              Guidance, Not Advice
-            </h3>
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-12 text-center">
+              <div className="inline-flex items-center justify-center mb-4 space-x-2">
+                <Shield className="w-8 h-8 text-green-600" />
+                <h3 className="text-2xl font-semibold text-gray-900">
+                  Your Privacy & Security
+                </h3>
+              </div>
+              <p className="leading-relaxed text-gray-600">
+                We take your privacy seriously. Here's our commitment to you:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="flex items-start p-4 space-x-4 border border-green-200 rounded-lg bg-green-50">
+                <Lock className="flex-shrink-0 w-6 h-6 mt-1 text-green-600" />
+                <div>
+                  <h4 className="mb-1 font-semibold text-gray-900">
+                    Secure Data
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    All calculations are encrypted and secure. We never share
+                    your personal information.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start p-4 space-x-4 border border-blue-200 rounded-lg bg-blue-50">
+                <Shield className="flex-shrink-0 w-6 h-6 mt-1 text-blue-600" />
+                <div>
+                  <h4 className="mb-1 font-semibold text-gray-900">No Spam</h4>
+                  <p className="text-sm text-gray-600">
+                    We'll never send you unwanted emails. Your inbox stays
+                    clean.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start p-4 space-x-4 border border-purple-200 rounded-lg bg-purple-50">
+                <CheckCircle className="flex-shrink-0 w-6 h-6 mt-1 text-purple-600" />
+                <div>
+                  <h4 className="mb-1 font-semibold text-gray-900">
+                    Accurate Calculations
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Based on official Bangladesh tax regulations and updated
+                    regularly.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start p-4 space-x-4 border border-yellow-200 rounded-lg bg-yellow-50">
+                <FileText className="flex-shrink-0 w-6 h-6 mt-1 text-yellow-600" />
+                <div>
+                  <h4 className="mb-1 font-semibold text-gray-900">
+                    Guidance Only
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Estimates for informational purposes. Consult a professional
+                    for official advice.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="max-w-3xl mx-auto leading-relaxed text-gray-600">
-            This tool helps you understand your tax situation and make informed
-            decisions. It provides estimates and guidance only - not legal or
-            accounting advice. Results are for informational purposes. Please
-            consult a licensed professional for official matters.
-          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 text-white bg-gray-900">
+      <footer className="py-12 text-white bg-gradient-to-br from-gray-900 to-gray-800">
         <div className="container-custom">
-          <div className="grid items-center grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 mb-8 md:grid-cols-3">
             <div>
               <div className="flex items-center mb-4 space-x-2">
-                <Calculator className="w-6 h-6 text-primary-400" />
+                <div className="p-2 rounded-lg bg-gradient-to-br from-primary-600 to-purple-600">
+                  <Calculator className="w-5 h-5 text-white" />
+                </div>
                 <span className="text-lg font-semibold">FreelancerTax.BD</span>
               </div>
-              <p className="text-gray-300">
-                Making tax calculations simple for Bangladesh freelancers.
+              <p className="text-sm text-gray-300">
+                Making tax calculations simple and accessible for Bangladesh
+                freelancers. Get instant, accurate estimates in seconds.
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-400">
-                © 2024 FreelancerTax.BD. All rights reserved.
+            <div>
+              <h4 className="mb-4 font-semibold">Quick Links</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>
+                  <button
+                    onClick={() => {
+                      document
+                        .getElementById("calculator-section")
+                        ?.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                    }}
+                    className="transition-colors hover:text-primary-400"
+                  >
+                    Calculate Tax
+                  </button>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="transition-colors hover:text-primary-400"
+                  >
+                    How It Works
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="transition-colors hover:text-primary-400"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 font-semibold">Contact</h4>
+              <p className="text-sm text-gray-300">
+                Have questions? We're here to help!
               </p>
-              <p className="mt-1 text-sm text-gray-400">
-                Built for freelancers, by understanding.
+              <p className="mt-2 text-sm text-gray-300">
+                Email: support@freelancertax.bd
               </p>
             </div>
           </div>
+          <div className="pt-8 text-center border-t border-gray-700">
+            <p className="text-sm text-gray-400">
+              2024 FreelancerTax.BD. All rights reserved.
+            </p>
+            <p className="mt-1 text-sm text-gray-400">
+              Built with for Bangladesh freelancers
+            </p>
+          </div>
         </div>
       </footer>
+
+      {/* Signup Modal */}
+      {showSignupModal && (
+        <SignupModal
+          onClose={() => setShowSignupModal(false)}
+          onSubmit={handleSignupSubmit}
+          loading={signupLoading}
+          tier={benefitTier}
+        />
+      )}
+    </div>
+  );
+}
+
+interface SignupModalProps {
+  onClose: () => void;
+  onSubmit: (email: string, name?: string) => void;
+  loading: boolean;
+  tier: BenefitTier;
+}
+
+function SignupModal({ onClose, onSubmit, loading, tier }: SignupModalProps) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      onSubmit(email, name);
+    }
+  };
+
+  const tierInfo: TierInfo = {
+    detailed: "Detailed Tax Report",
+    planning: "Tax Planning Guide",
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Sign Up for Free Benefits
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+            disabled={loading}
+          ></button>
+        </div>
+
+        <div className="p-3 mb-4 rounded-lg bg-primary-50">
+          <p className="text-sm text-primary-800">
+            You're signing up for: <strong>{tierInfo[tier]}</strong>
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="input-field"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Name (Optional)
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your name"
+              className="input-field"
+              disabled={loading}
+            />
+          </div>
+
+          <div className="flex space-x-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 btn-secondary"
+              disabled={loading}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 btn-primary disabled:opacity-50"
+              disabled={loading || !email}
+            >
+              {loading ? "Signing Up..." : "Sign Up Free"}
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-4 text-xs text-center text-gray-500">
+          No payment required • Instant access • 100% free
+        </p>
+      </div>
     </div>
   );
 }
