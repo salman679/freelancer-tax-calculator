@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     canonical: "https://freelancertax.bd",
   },
   verification: {
-    google: "your-google-verification-code",
+    google: "eurpip2QfDhrSYVhYNM7A0nnz7QOMd6prQqE7IfUqAQ",
   },
 };
 
