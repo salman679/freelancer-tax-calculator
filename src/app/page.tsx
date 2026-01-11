@@ -22,15 +22,9 @@ import {
   type TaxInput,
   type TaxResult,
 } from "@/lib/tax-calculator";
-import { FreeResult } from "@/components/FreeResult";
 import { PaidResult } from "@/components/PaidResult";
-import type { BenefitTier } from "./calculator/page";
 
-type CalculationStep = "input" | "free-result" | "premium-result";
-type TierInfo = {
-  detailed: string;
-  planning: string;
-};
+type CalculationStep = "input" | "result";
 
 export default function HomePage() {
   const [step, setStep] = useState<CalculationStep>("input");
@@ -40,28 +34,14 @@ export default function HomePage() {
     expenses: 0,
   });
   const [result, setResult] = useState<TaxResult | null>(null);
-  const [benefitTier, setBenefitTier] = useState<BenefitTier>("detailed");
-  const [isSignedUp, setIsSignedUp] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [userId, setUserId] = useState<string | null>(null);
-  const [showSignupModal, setShowSignupModal] = useState(false);
-  const [signupLoading, setSignupLoading] = useState(false);
 
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("userEmail");
-    const storedUserId = localStorage.getItem("userId");
-
-    if (storedEmail && storedUserId) {
-      setUserEmail(storedEmail);
-      setUserId(storedUserId);
-      setIsSignedUp(true);
-    }
-  }, []);
-
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     const taxResult = calculateTax(input);
     setResult(taxResult);
-    setStep("free-result");
+    setStep("result");
+
+    // Save calculation anonymously
+    await saveCalculation();
 
     // Scroll to results
     setTimeout(() => {
@@ -72,54 +52,7 @@ export default function HomePage() {
     }, 100);
   };
 
-  const handleSignup = (tier: BenefitTier) => {
-    setBenefitTier(tier);
-    setShowSignupModal(true);
-  };
-
-  const handleSignupSubmit = async (email: string, name?: string) => {
-    setSignupLoading(true);
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          name,
-          benefitTier,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success && data.user) {
-        localStorage.setItem("userEmail", data.user.email);
-        localStorage.setItem("userId", data.user.id);
-        localStorage.setItem("userBenefitTier", data.user.benefitTier);
-
-        setUserEmail(data.user.email);
-        setUserId(data.user.id);
-        setIsSignedUp(true);
-        setShowSignupModal(false);
-        setStep("premium-result");
-
-        if (result) {
-          await saveCalculation(data.user.id);
-        }
-      } else {
-        alert("Signup failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Signup error:", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setSignupLoading(false);
-    }
-  };
-
-  const saveCalculation = async (userIdParam?: string) => {
+  const saveCalculation = async () => {
     if (!result) return;
 
     try {
@@ -129,7 +62,6 @@ export default function HomePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userIdParam || userId,
           annualIncome: input.annualIncome,
           incomeSource: input.incomeSource,
           expenses: input.expenses,
@@ -177,11 +109,6 @@ export default function HomePage() {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              {isSignedUp && (
-                <span className="hidden text-sm text-gray-600 sm:block">
-                  👋 {userEmail}
-                </span>
-              )}
               <button
                 onClick={() => {
                   document
@@ -385,7 +312,7 @@ export default function HomePage() {
                     disabled={!input.annualIncome}
                     className="w-full py-4 text-lg font-semibold transition-shadow shadow-lg btn-primary disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl"
                   >
-                    Calculate My Tax - Free
+                    Calculate My Tax
                   </button>
 
                   {/* Trust Indicators */}
@@ -420,24 +347,14 @@ export default function HomePage() {
       </section>
 
       {/* Results Section */}
-      {(step === "free-result" || step === "premium-result") && (
+      {step === "result" && (
         <section id="results-section" className="py-16 bg-gray-50">
           <div className="container-custom">
-            {step === "free-result" && result && (
-              <FreeResult
-                result={result}
-                input={input}
-                onSignup={handleSignup}
-                onRecalculate={resetCalculation}
-                isSignedUp={isSignedUp}
-              />
-            )}
-
-            {step === "premium-result" && result && (
+            {result && (
               <PaidResult
                 result={result}
                 input={input}
-                tier={benefitTier}
+                tier={"detailed"}
                 onNewCalculation={resetCalculation}
               />
             )}
@@ -741,116 +658,6 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-
-      {/* Signup Modal */}
-      {showSignupModal && (
-        <SignupModal
-          onClose={() => setShowSignupModal(false)}
-          onSubmit={handleSignupSubmit}
-          loading={signupLoading}
-          tier={benefitTier}
-        />
-      )}
-    </div>
-  );
-}
-
-interface SignupModalProps {
-  onClose: () => void;
-  onSubmit: (email: string, name?: string) => void;
-  loading: boolean;
-  tier: BenefitTier;
-}
-
-function SignupModal({ onClose, onSubmit, loading, tier }: SignupModalProps) {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      onSubmit(email, name);
-    }
-  };
-
-  const tierInfo: TierInfo = {
-    detailed: "Detailed Tax Report",
-    planning: "Tax Planning Guide",
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Sign Up for Free Benefits
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
-            disabled={loading}
-          ></button>
-        </div>
-
-        <div className="p-3 mb-4 rounded-lg bg-primary-50">
-          <p className="text-sm text-primary-800">
-            You're signing up for: <strong>{tierInfo[tier]}</strong>
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="input-field"
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">
-              Name (Optional)
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              className="input-field"
-              disabled={loading}
-            />
-          </div>
-
-          <div className="flex space-x-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 btn-secondary"
-              disabled={loading}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-1 btn-primary disabled:opacity-50"
-              disabled={loading || !email}
-            >
-              {loading ? "Signing Up..." : "Sign Up Free"}
-            </button>
-          </div>
-        </form>
-
-        <p className="mt-4 text-xs text-center text-gray-500">
-          No payment required • Instant access • 100% free
-        </p>
-      </div>
     </div>
   );
 }
