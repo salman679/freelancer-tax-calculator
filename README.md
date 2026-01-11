@@ -1,6 +1,6 @@
 # Freelancer Tax Calculator Bangladesh
 
-A search-based, low-maintenance, decision-focused web tool for Bangladesh freelancers to estimate their tax obligations.
+A search-based, low-maintenance, decision-focused web tool for Bangladesh freelancers to estimate their tax obligations
 
 ## 🎯 Features
 
