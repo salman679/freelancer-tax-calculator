@@ -3,57 +3,82 @@ import Link from "next/link";
 import { FileText, ArrowRight, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
-  title:
-    "Freelancer Tax Guide Bangladesh 2024 | NBR Tax Filing Tips & Articles",
+  title: "Freelancer Tax Guides Bangladesh | Income Tax Tips & Resources",
   description:
-    "Complete guide to freelancer taxes in Bangladesh. Learn about NBR tax filing, income tax rates, Fiverr & Upwork tax obligations, deductions, and tax planning strategies for 2024.",
+    "Bangladesh-focused freelancer tax guides covering income tax basics, TIN steps, record-keeping, and platform-specific tips for Upwork and Fiverr.",
   keywords:
-    "freelancer tax guide bangladesh, nbr tax filing, fiverr tax guide, upwork tax bangladesh, freelancer tax tips, bangladesh tax planning, online income tax bd",
+    "freelancer tax guide bangladesh, income tax for freelancers, upwork tax bangladesh, fiverr tax bangladesh, tin guide bangladesh, freelancer tax tips",
 };
 
 export default function BlogPage() {
   const articles = [
     {
-      slug: "freelancer-tax-guide-bangladesh",
-      title: "Complete Freelancer Tax Guide for Bangladesh 2024",
+      slug: "freelancer-income-tax-bangladesh-2025-guide",
+      title: "Freelancer Income Tax in Bangladesh (2025): Simple Guide",
       excerpt:
-        "Everything you need to know about paying taxes as a freelancer in Bangladesh. NBR tax slabs, filing requirements, and tax-saving strategies.",
+        "A beginner-friendly overview of what counts as income, how to track expenses, and how to estimate freelancer income tax in Bangladesh.",
+      date: "2025-01-05",
+      readTime: "10 min read",
+      category: "Beginner Guide",
+    },
+    {
+      slug: "fiverr-income-tax-bangladesh",
+      title: "Fiverr Income Tax in Bangladesh: Practical Guide",
+      excerpt:
+        "Learn how to track Fiverr earnings in BDT, document expenses, and estimate taxes before filing season.",
+      date: "2025-01-05",
+      readTime: "9 min read",
+      category: "Platform Guide",
+    },
+    {
+      slug: "upwork-income-tax-bangladesh",
+      title: "Upwork Income Tax in Bangladesh: Checklist & Examples",
+      excerpt:
+        "A clear checklist for Upwork freelancers, with examples and steps to estimate tax and prepare records.",
+      date: "2025-01-05",
+      readTime: "9 min read",
+      category: "Platform Guide",
+    },
+    {
+      slug: "tin-for-freelancers-bangladesh",
+      title: "How to Get a TIN in Bangladesh for Freelancers",
+      excerpt:
+        "Simple steps and preparation notes for freelancers applying for a TIN in Bangladesh.",
+      date: "2025-01-05",
+      readTime: "8 min read",
+      category: "Compliance",
+    },
+    {
+      slug: "freelancer-tax-records-bangladesh",
+      title: "Freelancer Tax Records in Bangladesh: Simple Bookkeeping",
+      excerpt:
+        "A practical guide to tracking income, expenses, and invoices so tax filing becomes easier.",
+      date: "2025-01-05",
+      readTime: "9 min read",
+      category: "Planning",
+    },
+    {
+      slug: "freelancer-tax-filing-bangladesh",
+      title: "How to File Income Tax as a Freelancer in Bangladesh",
+      excerpt:
+        "A step-by-step filing timeline with document checklists and tips for organizing your tax season.",
+      date: "2025-01-05",
+      readTime: "10 min read",
+      category: "Filing Guide",
+    },
+    {
+      slug: "freelancer-tax-guide-bangladesh",
+      title: "Complete Freelancer Tax Guide for Bangladesh",
+      excerpt:
+        "Core overview of freelancer tax responsibilities, filing guidance, and planning notes for Bangladesh.",
       date: "2024-01-01",
       readTime: "10 min read",
       category: "Tax Guide",
-    },
-    {
-      slug: "fiverr-tax-bangladesh",
-      title: "How to Pay Tax on Fiverr Income in Bangladesh",
-      excerpt:
-        "Step-by-step guide to calculating and paying tax on your Fiverr earnings. Learn about NBR requirements, tax rates, and filing procedures.",
-      date: "2024-01-01",
-      readTime: "8 min read",
-      category: "Platform Guide",
-    },
-    {
-      slug: "upwork-tax-bangladesh",
-      title: "Upwork Tax Calculator Bangladesh: Complete Guide 2024",
-      excerpt:
-        "Calculate your Upwork tax obligations in Bangladesh. Understand tax rates, deductions, and how to file your tax return with NBR.",
-      date: "2024-01-01",
-      readTime: "8 min read",
-      category: "Platform Guide",
-    },
-    {
-      slug: "nbr-tax-filing-guide",
-      title: "NBR Tax Filing Guide for Freelancers 2024",
-      excerpt:
-        "Complete guide to filing your tax return with NBR as a freelancer. Documents needed, deadlines, and step-by-step filing process.",
-      date: "2024-01-01",
-      readTime: "12 min read",
-      category: "Filing Guide",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link
@@ -65,20 +90,18 @@ export default function BlogPage() {
         </div>
       </header>
 
-      {/* Hero */}
       <section className="py-16 text-white bg-gradient-to-br from-primary-600 to-purple-600">
         <div className="text-center container-custom">
           <h1 className="mb-4 text-4xl font-bold lg:text-5xl">
-            Freelancer Tax Guide Bangladesh
+            Freelancer Tax Guides for Bangladesh
           </h1>
           <p className="max-w-2xl mx-auto text-xl text-primary-100">
-            Expert guides and tips for managing your freelancer taxes in
-            Bangladesh
+            Practical, Bangladesh-specific resources to help freelancers plan
+            income tax, track earnings, and file with confidence.
           </p>
         </div>
       </section>
 
-      {/* Articles Grid */}
       <section className="py-16">
         <div className="container-custom">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
