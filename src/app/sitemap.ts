@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://freelancertax.bd";
+  const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
 
   return [
     {
@@ -18,24 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog/freelancer-tax-guide-bangladesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/fiverr-tax-bangladesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/upwork-tax-bangladesh`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/nbr-tax-filing-guide`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
