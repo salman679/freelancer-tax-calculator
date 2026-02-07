@@ -229,43 +229,23 @@ export default function CalculatorPage() {
               <ul className="mt-3 space-y-2 text-sm text-primary-700">
                 <li>
                   <a
-                    href="/blog/freelancer-income-tax-bangladesh-2025-guide"
+                    href="/blog/freelancer-tax-guide-bangladesh"
                     className="font-medium underline"
                   >
-                    Freelancer income tax guide for beginners
+                    Detailed freelancer tax guide
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/blog/tin-for-freelancers-bangladesh"
-                    className="font-medium underline"
-                  >
-                    How to get a TIN in Bangladesh
-                  </a>
+                  <span className="font-medium">How to get a TIN</span>
+                  <span className="ml-2 text-xs text-primary-600">
+                    (Coming soon)
+                  </span>
                 </li>
                 <li>
-                  <a
-                    href="/blog/freelancer-tax-filing-bangladesh"
-                    className="font-medium underline"
-                  >
-                    Step-by-step filing checklist
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/blog/fiverr-income-tax-bangladesh"
-                    className="font-medium underline"
-                  >
-                    Fiverr income tax guide
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/blog/upwork-income-tax-bangladesh"
-                    className="font-medium underline"
-                  >
-                    Upwork income tax guide
-                  </a>
+                  <span className="font-medium">How to file a tax return</span>
+                  <span className="ml-2 text-xs text-primary-600">
+                    (Coming soon)
+                  </span>
                 </li>
               </ul>
             </div>
