@@ -1,4 +1,4 @@
-# robots.txt for FreelancerTax.BD
+# robots.txt for Freelancer Tax Calculator
 User-agent: *
 Allow: /
 Disallow: /api/
