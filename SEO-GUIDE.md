@@ -85,8 +85,7 @@ This document outlines all SEO optimizations implemented in the project and step
 
    - Go to [Google Search Console](https://search.google.com/search-console)
    - Add property: `https://freelancer-tax-calculator.salmanizhar.com`
-   - Verify using HTML tag method (code already in layout.tsx)
-   - Replace `your-google-verification-code` with actual code
+   - Verify using HTML tag method (code already in `src/app/layout.tsx`)
 
 2. **Submit Sitemap**
 

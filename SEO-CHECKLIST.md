@@ -6,7 +6,7 @@
 
 - [ ] Go to https://search.google.com/search-console
 - [ ] Add property: `https://freelancer-tax-calculator.salmanizhar.com`
-- [ ] Get verification code and replace `your-google-verification-code` in `src/app/layout.tsx` line 76
+- [x] Google verification code is configured in `src/app/layout.tsx`
 - [ ] Submit sitemap: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
 - [ ] Request indexing for all pages
 
