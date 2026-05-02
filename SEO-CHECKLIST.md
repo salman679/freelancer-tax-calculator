@@ -37,7 +37,7 @@ Replace `https://freelancer-tax-calculator.salmanizhar.com` with your actual dom
 ### 5. Social Media Accounts
 
 - [ ] Create Facebook page: facebook.com/freelancertaxbd
-- [ ] Create Twitter account: @FreelancerTaxBD
+- [ ] Create Twitter/X account for Freelancer Tax Calculator
 - [ ] Update social links in `src/app/layout.tsx` (organizationSchema)
 
 ## Content Creation Tasks

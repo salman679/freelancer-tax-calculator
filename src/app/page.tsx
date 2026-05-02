@@ -104,8 +104,11 @@ export default function HomePage() {
               <div className="p-2 rounded-lg bg-gradient-to-br from-primary-600 to-purple-600">
                 <Calculator className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-transparent bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text">
-                FreelancerTax.BD
+              <span className="text-lg font-bold text-transparent bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text sm:text-xl">
+                <span className="sm:hidden">Freelancer Tax</span>
+                <span className="hidden sm:inline">
+                  Freelancer Tax Calculator
+                </span>
               </span>
             </div>
             <div className="flex items-center space-x-4">
@@ -596,7 +599,9 @@ export default function HomePage() {
                 <div className="p-2 rounded-lg bg-gradient-to-br from-primary-600 to-purple-600">
                   <Calculator className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-lg font-semibold">FreelancerTax.BD</span>
+                <span className="text-lg font-semibold">
+                  Freelancer Tax Calculator
+                </span>
               </div>
               <p className="text-sm text-gray-300">
                 Making tax calculations simple and accessible for Bangladesh
@@ -643,17 +648,20 @@ export default function HomePage() {
               <p className="text-sm text-gray-300">
                 Have questions? We're here to help!
               </p>
-              <p className="mt-2 text-sm text-gray-300">
-                Email: support@freelancertax.bd
-              </p>
+              <a
+                className="inline-block mt-2 text-sm text-gray-300 transition-colors hover:text-primary-400"
+                href="https://freelancer-tax-calculator.salmanizhar.com"
+              >
+                freelancer-tax-calculator.salmanizhar.com
+              </a>
             </div>
           </div>
           <div className="pt-8 text-center border-t border-gray-700">
             <p className="text-sm text-gray-400">
-              2024 FreelancerTax.BD. All rights reserved.
+              2026 Freelancer Tax Calculator. All rights reserved.
             </p>
             <p className="mt-1 text-sm text-gray-400">
-              Built with for Bangladesh freelancers
+              Built for Bangladesh freelancers
             </p>
           </div>
         </div>

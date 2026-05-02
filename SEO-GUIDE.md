@@ -1,4 +1,4 @@
-# SEO Optimization Guide - FreelancerTax.BD
+# SEO Optimization Guide - Freelancer Tax Calculator
 
 This document outlines all SEO optimizations implemented in the project and steps to improve Google rankings.
 
@@ -105,7 +105,7 @@ This document outlines all SEO optimizations implemented in the project and step
 1. **Create GA4 Property**
 
    - Go to [Google Analytics](https://analytics.google.com)
-   - Create new property for FreelancerTax.BD
+   - Create new property for Freelancer Tax Calculator
    - Get Measurement ID (G-XXXXXXXXXX)
 
 2. **Add to Website**
