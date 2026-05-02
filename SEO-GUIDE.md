@@ -109,8 +109,8 @@ This document outlines all SEO optimizations implemented in the project and step
    - Get Measurement ID (G-XXXXXXXXXX)
 
 2. **Add to Website**
-   - Install `@next/third-parties` package
-   - Add Google Analytics component to layout.tsx
+   - GA4 tag is configured in `src/app/layout.tsx`
+   - Measurement ID: `G-RJKPJJWQGN`
 
 ## 📈 Ranking Improvement Strategies
 

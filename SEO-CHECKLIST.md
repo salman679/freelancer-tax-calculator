@@ -30,9 +30,8 @@ Replace `https://freelancer-tax-calculator.salmanizhar.com` with your actual dom
 
 ### 4. Analytics Setup
 
-- [ ] Create Google Analytics 4 property
-- [ ] Install: `npm install @next/third-parties`
-- [ ] Add GA tracking code to layout
+- [x] Google Analytics 4 tag configured with measurement ID `G-RJKPJJWQGN`
+- [x] Add GA tracking code to layout
 
 ### 5. Social Media Accounts
 
