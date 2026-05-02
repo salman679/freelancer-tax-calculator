@@ -84,14 +84,14 @@ This document outlines all SEO optimizations implemented in the project and step
 1. **Verify Your Website**
 
    - Go to [Google Search Console](https://search.google.com/search-console)
-   - Add property: `https://freelancertax.bd`
+   - Add property: `https://freelancer-tax-calculator.salmanizhar.com`
    - Verify using HTML tag method (code already in layout.tsx)
    - Replace `your-google-verification-code` with actual code
 
 2. **Submit Sitemap**
 
    - In Search Console, go to Sitemaps
-   - Submit: `https://freelancertax.bd/sitemap.xml`
+   - Submit: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
 
 3. **Request Indexing**
    - Use URL Inspection tool

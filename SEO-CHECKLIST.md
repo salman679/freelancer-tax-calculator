@@ -5,9 +5,9 @@
 ### 1. Google Search Console Setup
 
 - [ ] Go to https://search.google.com/search-console
-- [ ] Add property: `https://freelancertax.bd`
+- [ ] Add property: `https://freelancer-tax-calculator.salmanizhar.com`
 - [ ] Get verification code and replace `your-google-verification-code` in `src/app/layout.tsx` line 76
-- [ ] Submit sitemap: `https://freelancertax.bd/sitemap.xml`
+- [ ] Submit sitemap: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
 - [ ] Request indexing for all pages
 
 ### 2. Create Social Media Images
@@ -21,7 +21,7 @@
 
 ### 3. Update Domain References
 
-Replace `https://freelancertax.bd` with your actual domain in:
+Replace `https://freelancer-tax-calculator.salmanizhar.com` with your actual domain in:
 
 - [ ] `src/app/layout.tsx` (metadata section)
 - [ ] `src/app/sitemap.ts`

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
       "Calculate your freelancer tax in Bangladesh instantly. Free tax calculator for Fiverr, Upwork & online income. Get accurate NBR tax estimates, filing requirements & detailed tax breakdowns.",
     type: "website",
     locale: "en_US",
-    url: "https://freelancertax.bd",
+    url: "https://freelancer-tax-calculator.salmanizhar.com",
     siteName: "FreelancerTax.BD",
     images: [
       {
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://freelancertax.bd",
+    canonical: "https://freelancer-tax-calculator.salmanizhar.com",
   },
   verification: {
     google: "eurpip2QfDhrSYVhYNM7A0nnz7QOMd6prQqE7IfUqAQ",
@@ -91,7 +91,7 @@ export default function RootLayout({
     name: "FreelancerTax.BD - Bangladesh Freelancer Tax Calculator",
     description:
       "Free online tax calculator for Bangladesh freelancers. Calculate income tax for Fiverr, Upwork and freelance earnings instantly.",
-    url: "https://freelancertax.bd",
+    url: "https://freelancer-tax-calculator.salmanizhar.com",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Any",
     offers: {
@@ -109,12 +109,12 @@ export default function RootLayout({
     author: {
       "@type": "Organization",
       name: "FreelancerTax.BD",
-      url: "https://freelancertax.bd",
+      url: "https://freelancer-tax-calculator.salmanizhar.com",
     },
     provider: {
       "@type": "Organization",
       name: "FreelancerTax.BD",
-      url: "https://freelancertax.bd",
+      url: "https://freelancer-tax-calculator.salmanizhar.com",
     },
   };
 
@@ -122,8 +122,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "FreelancerTax.BD",
-    url: "https://freelancertax.bd",
-    logo: "https://freelancertax.bd/logo.png",
+    url: "https://freelancer-tax-calculator.salmanizhar.com",
+    logo: "https://freelancer-tax-calculator.salmanizhar.com/logo.png",
     description:
       "Bangladesh's leading freelancer tax calculator. Free income tax estimation for freelancers, Fiverr sellers, and Upwork workers.",
     address: {
@@ -193,7 +193,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
-        <link rel="canonical" href="https://freelancertax.bd" />
+        <link rel="canonical" href="https://freelancer-tax-calculator.salmanizhar.com" />
         <meta name="theme-color" content="#3b82f6" />
       </head>
       <body className="min-h-screen bg-gray-50" suppressHydrationWarning={true}>

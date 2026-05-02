@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://freelancertax.bd";
+  const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
 
   return [
     {

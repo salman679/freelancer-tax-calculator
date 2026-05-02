@@ -4,7 +4,7 @@ Allow: /
 Disallow: /api/
 
 # Sitemaps
-Sitemap: https://freelancertax.bd/sitemap.xml
+Sitemap: https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml
 
 # Crawl-delay for specific bots
 User-agent: Googlebot
