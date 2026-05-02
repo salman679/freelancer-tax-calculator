@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
-const gaMeasurementId = "G-RJKPJJWQGN";
+const gaMeasurementId = "G-VJV7PD83VN";
 
 export const metadata: Metadata = {
   title:

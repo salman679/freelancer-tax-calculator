@@ -110,7 +110,7 @@ This document outlines all SEO optimizations implemented in the project and step
 
 2. **Add to Website**
    - GA4 tag is configured in `src/app/layout.tsx`
-   - Measurement ID: `G-RJKPJJWQGN`
+   - Measurement ID: `G-VJV7PD83VN`
 
 ## 📈 Ranking Improvement Strategies
 

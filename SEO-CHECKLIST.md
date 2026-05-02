@@ -30,7 +30,7 @@ Replace `https://freelancer-tax-calculator.salmanizhar.com` with your actual dom
 
 ### 4. Analytics Setup
 
-- [x] Google Analytics 4 tag configured with measurement ID `G-RJKPJJWQGN`
+- [x] Google Analytics 4 tag configured with measurement ID `G-VJV7PD83VN`
 - [x] Add GA tracking code to layout
 
 ### 5. Social Media Accounts
