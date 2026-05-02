@@ -634,6 +634,17 @@ export default function HomePage() {
             <p className="mt-1 text-sm text-gray-400">
               Built for Bangladesh freelancers
             </p>
+            <p className="mt-1 text-sm text-gray-400">
+              Developed by{" "}
+              <a
+                href="https://www.salmanizhar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-gray-300 transition-colors hover:text-primary-400"
+              >
+                Salmanizhar
+              </a>
+            </p>
           </div>
         </div>
       </footer>
