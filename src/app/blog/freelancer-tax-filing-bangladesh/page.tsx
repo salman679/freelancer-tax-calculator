@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArticleJsonLd } from "@/components/ArticleJsonLd";
+import { createArticleMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title:
-    "How to File Income Tax as a Freelancer in Bangladesh: Documents & Timeline",
-  description:
-    "A step-by-step Bangladesh guide for freelancer tax filing. Learn which documents to collect, how to estimate tax, and how to prepare for deadlines.",
-};
+export const metadata: Metadata = createArticleMetadata(
+  "freelancer-tax-filing-bangladesh"
+);
 
 export default function FreelancerTaxFilingBangladesh() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <ArticleJsonLd slug="freelancer-tax-filing-bangladesh" />
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link

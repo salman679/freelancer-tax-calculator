@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArticleJsonLd } from "@/components/ArticleJsonLd";
+import { createArticleMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Upwork Income Tax in Bangladesh: Checklist & Examples (2025)",
-  description:
-    "A clear, Bangladesh-specific guide to Upwork income tax. Learn how to track earnings, estimate taxes in BDT, and prepare documents for filing.",
-};
+export const metadata: Metadata = createArticleMetadata(
+  "upwork-income-tax-bangladesh"
+);
 
 export default function UpworkIncomeTaxBangladesh() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <ArticleJsonLd slug="upwork-income-tax-bangladesh" />
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link

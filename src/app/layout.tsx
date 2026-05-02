@@ -1,40 +1,40 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import { JsonLd } from "@/components/JsonLd";
+import {
+  defaultKeywords,
+  organizationSchema,
+  siteConfig,
+  softwareApplicationSchema,
+  websiteSchema,
+} from "@/lib/seo";
 import "./globals.css";
 
-const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
 const gaMeasurementId = "G-VJV7PD83VN";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title:
     "Freelancer Tax Calculator Bangladesh | Income Tax Estimator for Freelancers",
-  description:
-    "Bangladesh-focused freelancer tax calculator and guide. Estimate income tax, understand filing needs, and get practical tips for freelancers earning locally or abroad.",
-  keywords: [
-    "freelancing income tax in bangladesh",
-    "freelancer tax calculator in bangladesh",
-    "income tax calculator for freelancers",
-    "tax for freelancers bangladesh",
-    "bangladesh freelancer tax guide",
-    "freelancer income tax bd",
-  ].join(", "),
-  authors: [{ name: "Freelancer Tax Calculator" }],
-  creator: "Freelancer Tax Calculator",
-  publisher: "Freelancer Tax Calculator",
-  applicationName: "Freelancer Tax Calculator",
+  description: siteConfig.description,
+  keywords: defaultKeywords,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  applicationName: siteConfig.name,
   category: "Finance",
   openGraph: {
     title: "Freelancer Tax Calculator in Bangladesh",
     description:
       "Estimate freelancer income tax in Bangladesh with a practical guide, examples, and FAQs.",
     type: "website",
-    locale: "en_US",
-    url: baseUrl,
-    siteName: "Freelancer Tax Calculator",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     images: [
       {
-        url: `${baseUrl}/og-image.svg`,
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
         alt: "Freelancer Tax Calculator in Bangladesh",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "Freelancer Tax Calculator in Bangladesh",
     description:
       "Bangladesh freelancer tax calculator with a guide, examples, and FAQs.",
-    images: [`${baseUrl}/twitter-image.svg`],
+    images: [siteConfig.twitterImage],
   },
   robots: {
     index: true,
@@ -59,9 +59,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: baseUrl,
-  },
   verification: {
     google: "eurpip2QfDhrSYVhYNM7A0nnz7QOMd6prQqE7IfUqAQ",
   },
@@ -72,44 +69,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Freelancer Tax Calculator",
-    url: baseUrl,
-    description:
-      "Bangladesh-focused freelancer tax calculator and educational guide for estimating income tax.",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${baseUrl}/calculator?query={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
-  };
-
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Freelancer Tax Calculator",
-    url: baseUrl,
-    logo: `${baseUrl}/og-image.svg`,
-    description:
-      "Educational resource for freelancers in Bangladesh to estimate income tax and understand filing basics.",
-  };
-
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        <JsonLd id="website-schema" data={websiteSchema} />
+        <JsonLd id="organization-schema" data={organizationSchema} />
+        <JsonLd
+          id="software-application-schema"
+          data={softwareApplicationSchema}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
-        <link rel="canonical" href={baseUrl} />
         <meta name="theme-color" content="#3b82f6" />
       </head>
       <body className="min-h-screen bg-gray-50" suppressHydrationWarning={true}>

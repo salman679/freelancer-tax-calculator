@@ -1,26 +1,40 @@
 import { MetadataRoute } from "next";
+import { blogArticles, siteConfig } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
-
-  return [
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
+      url: siteConfig.url,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/calculator`,
+      url: `${siteConfig.url}/calculator`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/blog/freelancer-tax-guide-bangladesh`,
+      url: `${siteConfig.url}/blog`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${siteConfig.url}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
+
+  const articleRoutes: MetadataRoute.Sitemap = blogArticles.map((article) => ({
+    url: `${siteConfig.url}/blog/${article.slug}`,
+    lastModified: new Date(article.dateModified),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...articleRoutes];
 }

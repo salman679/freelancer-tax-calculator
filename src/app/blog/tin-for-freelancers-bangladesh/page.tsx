@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArticleJsonLd } from "@/components/ArticleJsonLd";
+import { createArticleMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "How to Get a TIN in Bangladesh for Freelancers (Simple Steps)",
-  description:
-    "A clear, Bangladesh-specific guide to getting a TIN for freelancers. Learn why it matters, what documents to prepare, and how it supports tax filing.",
-};
+export const metadata: Metadata = createArticleMetadata(
+  "tin-for-freelancers-bangladesh"
+);
 
 export default function TinForFreelancersBangladesh() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <ArticleJsonLd slug="tin-for-freelancers-bangladesh" />
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link

@@ -1,312 +1,117 @@
-# SEO Optimization Guide - Freelancer Tax Calculator
-
-This document outlines all SEO optimizations implemented in the project and steps to improve Google rankings.
+# SEO Guide - Freelancer Tax Calculator
 
-## 🎯 High-Volume Keywords Targeted
+Last updated: May 3, 2026
 
-### Primary Keywords (High Search Volume)
+This project targets Bangladesh freelancers who need a fast way to estimate income tax and learn basic filing steps. The live site is:
 
-- **bangladesh tax calculator** (5,000+ monthly searches)
-- **freelancer tax calculator bangladesh** (2,000+ monthly searches)
-- **income tax calculator bangladesh** (8,000+ monthly searches)
-- **nbr tax calculator** (3,000+ monthly searches)
-- **fiverr tax bangladesh** (1,500+ monthly searches)
-- **upwork tax calculator bangladesh** (1,000+ monthly searches)
-- **bangladesh tax slab 2024** (4,000+ monthly searches)
+`https://freelancer-tax-calculator.salmanizhar.com`
 
-### Secondary Keywords (Medium Search Volume)
+## Current Implementation
 
-- freelancer income tax bd
-- tax calculator bd
-- freelance tax bd
-- self employed tax bangladesh
-- online income tax bangladesh
-- tax return bangladesh
-- nbr tax filing
-- bangladesh income tax rate
+### Technical SEO
 
-### Long-Tail Keywords (Lower Volume, High Intent)
+- Route-specific canonical URLs are generated for the homepage, calculator, blog index, blog articles, and privacy page.
+- `src/app/sitemap.ts` generates a sitemap for all current public routes.
+- `public/robots.txt` allows crawling and references the live sitemap.
+- Security headers are configured in `next.config.js`, including CSP, HSTS, Permissions-Policy, X-Frame-Options, X-Content-Type-Options, and Referrer-Policy.
+- The PWA manifest includes the app name, description, SVG icon, and shortcuts to the calculator and guides.
 
-- how to calculate tax in bangladesh
-- freelancer tax rate bangladesh
-- tax exemption bangladesh
-- tax planning bangladesh
-- freelancer tax guide bangladesh
+### Metadata
 
-## ✅ SEO Optimizations Implemented
+- Shared site metadata lives in `src/lib/seo.ts`.
+- Homepage metadata is emitted from a server page, while the interactive homepage UI lives in `src/components/HomePageClient.tsx`.
+- Blog article metadata is generated from the shared `blogArticles` list to keep titles, descriptions, canonicals, sitemap URLs, and schema aligned.
+- Open Graph and Twitter card images use:
+  - `public/og-image.svg`
+  - `public/twitter-image.svg`
 
-### 1. Meta Tags & Titles
+### Structured Data
 
-- ✅ Optimized page titles with primary keywords
-- ✅ Compelling meta descriptions (150-160 characters)
-- ✅ Keyword-rich H1, H2, H3 headings
-- ✅ Alt text for all images (to be added)
-- ✅ Open Graph tags for social sharing
-- ✅ Twitter Card meta tags
+The project now includes:
 
-### 2. Structured Data (Schema.org)
+- `WebSite`
+- `Organization`
+- `SoftwareApplication`
+- `FAQPage` on `/calculator`
+- `ItemList` on `/blog`
+- `BlogPosting` on each article
+- `BreadcrumbList` on calculator, blog index, and article pages
 
-- ✅ WebApplication schema
-- ✅ Organization schema
-- ✅ FAQPage schema
-- ✅ AggregateRating schema
-- ✅ BreadcrumbList schema (to be added to blog pages)
+Validate deployed pages with Google Rich Results Test:
 
-### 3. Technical SEO
+`https://search.google.com/test/rich-results`
 
-- ✅ Sitemap.xml generated automatically
-- ✅ Robots.txt configured
-- ✅ Canonical URLs
-- ✅ Mobile-responsive design
-- ✅ Fast page load times
-- ✅ HTTPS enabled (when deployed)
-- ✅ Compression enabled
-- ✅ Image optimization configured
+### Analytics
 
-### 4. Content SEO
+Google Analytics 4 is configured in `src/app/layout.tsx` with measurement ID:
 
-- ✅ SEO-optimized blog articles
-- ✅ Keyword-rich content
-- ✅ Internal linking structure
-- ✅ FAQ section with common queries
-- ✅ User testimonials for social proof
+`G-VJV7PD83VN`
 
-### 5. Performance Optimization
+Vercel Analytics is also enabled.
 
-- ✅ Next.js Image optimization
-- ✅ Code splitting
-- ✅ Lazy loading
-- ✅ Minification
-- ✅ Compression
+## Keyword Focus
 
-## 📊 Google Search Console Setup
+Primary keyword themes:
 
-1. **Verify Your Website**
+- freelancer tax calculator bangladesh
+- income tax calculator for freelancers
+- freelancing income tax in bangladesh
+- fiverr income tax bangladesh
+- upwork income tax bangladesh
+- TIN for freelancers Bangladesh
+- freelancer tax filing Bangladesh
 
-   - Go to [Google Search Console](https://search.google.com/search-console)
-   - Add property: `https://freelancer-tax-calculator.salmanizhar.com`
-   - Verify using HTML tag method (code already in `src/app/layout.tsx`)
+Use Search Console data after indexing to validate which terms actually drive impressions and clicks.
 
-2. **Submit Sitemap**
+## Content Map
 
-   - In Search Console, go to Sitemaps
-   - Submit: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
+Published pages:
 
-3. **Request Indexing**
-   - Use URL Inspection tool
-   - Request indexing for main pages:
-     - Homepage: `/`
-     - Calculator: `/calculator`
-     - Blog: `/blog`
-     - Each blog article
+- `/` - Main calculator landing page
+- `/calculator` - Calculator plus long-form guide and FAQ
+- `/blog` - Guide index
+- `/blog/freelancer-income-tax-bangladesh-2025-guide`
+- `/blog/fiverr-income-tax-bangladesh`
+- `/blog/upwork-income-tax-bangladesh`
+- `/blog/tin-for-freelancers-bangladesh`
+- `/blog/freelancer-tax-records-bangladesh`
+- `/blog/freelancer-tax-filing-bangladesh`
+- `/blog/freelancer-tax-guide-bangladesh`
+- `/privacy`
 
-## 🚀 Google Analytics Setup
+Recommended next content:
 
-1. **Create GA4 Property**
+- Bangladesh tax deductions for freelancers
+- Freelancer tax planning strategies Bangladesh
+- Common tax mistakes freelancers make in Bangladesh
+- Quarterly tax payment guide for freelancers
+- Bengali version of the calculator guide
+- Downloadable PDF tax guide
 
-   - Go to [Google Analytics](https://analytics.google.com)
-   - Create new property for Freelancer Tax Calculator
-   - Get Measurement ID (G-XXXXXXXXXX)
+## Search Console Setup
 
-2. **Add to Website**
-   - GA4 tag is configured in `src/app/layout.tsx`
-   - Measurement ID: `G-VJV7PD83VN`
+1. Go to Google Search Console.
+2. Add this property:
+   `https://freelancer-tax-calculator.salmanizhar.com`
+3. Verify using the HTML tag method. The verification tag is already in `src/app/layout.tsx`.
+4. Submit:
+   `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
+5. Request indexing for the homepage, calculator, blog index, and every article.
 
-## 📈 Ranking Improvement Strategies
-
-### Immediate Actions (Week 1)
-
-1. ✅ Submit sitemap to Google Search Console
-2. ✅ Submit sitemap to Bing Webmaster Tools
-3. ✅ Create Google My Business profile (if applicable)
-4. ✅ Share on social media platforms
-5. ✅ Submit to Bangladesh business directories
-
-### Short-term (Month 1)
-
-1. Create 10+ blog articles targeting long-tail keywords
-2. Build backlinks from Bangladesh tech/freelance communities
-3. Guest post on Bangladesh freelancer blogs
-4. Create YouTube videos about tax calculation
-5. Engage in Bangladesh freelancer Facebook groups
-
-### Medium-term (Months 2-3)
-
-1. Create calculator tools for specific platforms (Fiverr, Upwork)
-2. Add Bengali language support
-3. Create downloadable tax guides (PDF)
-4. Build email newsletter for tax tips
-5. Partner with freelancer communities
-
-### Long-term (Months 4-6)
-
-1. Create comprehensive video tutorials
-2. Build authority through expert content
-3. Get featured in Bangladesh tech news sites
-4. Create mobile app version
-5. Implement user-generated content (reviews, testimonials)
-
-## 🔍 Keyword Placement Strategy
-
-### Homepage
-
-- Title: Primary keyword (bangladesh tax calculator)
-- H1: Primary + secondary keywords
-- First paragraph: Primary keyword within first 100 words
-- Throughout content: Natural keyword variations
-- Meta description: Primary keyword + call-to-action
-
-### Blog Articles
-
-- Title: Long-tail keyword variations
-- URL slug: Keyword-rich, hyphenated
-- H2/H3: Related keywords
-- Internal links: Anchor text with keywords
-- Image alt text: Descriptive with keywords
-
-## 📱 Local SEO (Bangladesh)
-
-1. **Bangladesh-specific optimization**
-
-   - Use "Bangladesh" in titles and content
-   - Reference NBR (National Board of Revenue)
-   - Use local currency (৳ Taka)
-   - Target Bangladesh cities (Dhaka, Chittagong, etc.)
-
-2. **Local directories**
-   - Submit to Bangladesh business directories
-   - List on freelancer community sites
-   - Register with Bangladesh tech forums
-
-## 🎯 Conversion Optimization
-
-1. **Clear CTAs**
-
-   - "Calculate Tax Free" buttons
-   - "Sign Up for Premium Features"
-   - "Download Tax Guide"
-
-2. **Trust signals**
-
-   - User testimonials
-   - Usage statistics (1000+ calculations)
-   - Security badges
-   - Privacy policy
-
-3. **User engagement**
-   - Interactive calculator
-   - Instant results
-   - Free basic features
-   - Easy signup process
-
-## 📊 Monitoring & Analytics
-
-### Track These Metrics
-
-- Organic search traffic
-- Keyword rankings
-- Bounce rate
-- Average session duration
-- Conversion rate (signups)
-- Page load speed
-- Mobile usability
-
-### Tools to Use
-
-- Google Search Console
-- Google Analytics 4
-- Google PageSpeed Insights
-- Ahrefs or SEMrush (for keyword tracking)
-- Hotjar (for user behavior)
-
-## 🔧 Next Steps
-
-1. **Replace placeholder content**
-
-   - Add actual Google verification code
-   - Create and add OG images (1200x630px)
-   - Create and add Twitter images (1200x675px)
-   - Add favicon and app icons
-
-2. **Content creation**
-
-   - Write remaining blog articles
-   - Create video content
-   - Design infographics
-   - Develop downloadable resources
-
-3. **Link building**
-
-   - Reach out to Bangladesh tech blogs
-   - Comment on relevant forums
-   - Create shareable content
-   - Build relationships with influencers
-
-4. **Technical improvements**
-   - Optimize Core Web Vitals
-   - Implement AMP for blog pages (optional)
-   - Add progressive web app features
-   - Improve mobile experience
-
-## 📝 Content Calendar
-
-### Week 1-2
-
-- Publish 4 main blog articles
-- Share on social media
-- Submit to directories
-
-### Week 3-4
-
-- Create video tutorials
-- Write 4 more blog articles
-- Start email newsletter
-
-### Month 2
-
-- Guest posting campaign
-- Influencer outreach
-- Community engagement
-- Create downloadable guides
-
-## 🎓 SEO Best Practices
-
-1. **Content Quality**
-
-   - Write for users first, search engines second
-   - Provide genuine value
-   - Answer user questions thoroughly
-   - Update content regularly
-
-2. **User Experience**
-
-   - Fast loading times
-   - Mobile-friendly design
-   - Easy navigation
-   - Clear call-to-actions
-
-3. **Technical Excellence**
-
-   - Clean code
-   - Proper HTML structure
-   - Semantic markup
-   - Accessibility compliance
-
-4. **Ethical SEO**
-   - No keyword stuffing
-   - No hidden text
-   - No link schemes
-   - Quality over quantity
-
-## 📞 Support
-
-For SEO questions or improvements, refer to:
-
-- Google Search Central: https://developers.google.com/search
-- Next.js SEO Guide: https://nextjs.org/learn/seo/introduction-to-seo
-- Schema.org Documentation: https://schema.org/
-
----
-
-**Last Updated:** January 1, 2024
-**Version:** 1.0
+## Manual Growth Work
+
+These tasks cannot be completed only from the codebase:
+
+- Create real Facebook and Twitter/X accounts.
+- Add those profile URLs to `organizationSchema.sameAs` after they exist.
+- Submit the site to relevant Bangladesh freelancer/business directories.
+- Share guides in relevant communities without spam.
+- Build links through guest posts, expert quotes, and partnerships.
+
+## Ongoing SEO Checks
+
+- Run PageSpeed Insights after deployment.
+- Validate structured data with Rich Results Test.
+- Watch Search Console for indexing, schema, and Core Web Vitals issues.
+- Refresh tax-year-sensitive pages when NBR rules change.
+- Review GA4 landing pages and Search Console query data monthly.

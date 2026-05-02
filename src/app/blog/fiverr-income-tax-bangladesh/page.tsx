@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArticleJsonLd } from "@/components/ArticleJsonLd";
+import { createArticleMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Fiverr Income Tax in Bangladesh: A Practical Guide for Freelancers",
-  description:
-    "Learn how Fiverr income is treated for freelancers in Bangladesh. Track earnings, estimate taxes in BDT, and prepare for filing with a simple checklist.",
-};
+export const metadata: Metadata = createArticleMetadata(
+  "fiverr-income-tax-bangladesh"
+);
 
 export default function FiverrIncomeTaxBangladesh() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <ArticleJsonLd slug="fiverr-income-tax-bangladesh" />
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link

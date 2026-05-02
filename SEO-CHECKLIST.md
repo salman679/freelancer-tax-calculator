@@ -1,186 +1,101 @@
-# SEO Implementation Checklist ✅
+# SEO Implementation Checklist
 
-## Immediate Actions Required
+Last updated: May 3, 2026
 
-### 1. Google Search Console Setup
+## Completed In Code
 
-- [ ] Go to https://search.google.com/search-console
-- [ ] Add property: `https://freelancer-tax-calculator.salmanizhar.com`
-- [x] Google verification code is configured in `src/app/layout.tsx`
-- [ ] Submit sitemap: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
-- [ ] Request indexing for all pages
+### Search And Indexing
 
-### 2. Create Social Media Images
+- [x] Google Search Console verification meta tag is configured in `src/app/layout.tsx`
+- [x] Live domain is configured as `https://freelancer-tax-calculator.salmanizhar.com`
+- [x] Canonical URLs are route-specific for homepage, calculator, blog, articles, and privacy page
+- [x] `sitemap.xml` includes homepage, calculator, blog index, privacy page, and all current blog articles
+- [x] `robots.txt` points to the live sitemap
 
-- [ ] Create OG image (1200x630px) → save as `public/og-image.png`
-- [ ] Create Twitter image (1200x675px) → save as `public/twitter-image.png`
-- [ ] Create favicon (32x32px) → save as `public/favicon.ico`
-- [ ] Create app icons:
-  - `public/icon-192.png` (192x192px)
-  - `public/icon-512.png` (512x512px)
+### Metadata And Social Sharing
 
-### 3. Update Domain References
+- [x] Default metadata is centralized in `src/lib/seo.ts`
+- [x] Homepage metadata is exported from a server page
+- [x] Calculator metadata includes canonical, Open Graph, and Twitter card data
+- [x] Blog index metadata includes canonical, Open Graph, and Twitter card data
+- [x] Blog article metadata is generated from the shared article list
+- [x] OG image is configured at `public/og-image.svg`
+- [x] Twitter image is configured at `public/twitter-image.svg`
+- [x] SVG app icon is configured through `src/app/icon.svg` and `manifest.ts`
 
-Replace `https://freelancer-tax-calculator.salmanizhar.com` with your actual domain in:
+### Structured Data
 
-- [ ] `src/app/layout.tsx` (metadata section)
-- [ ] `src/app/sitemap.ts`
-- [ ] `public/robots.txt`
-- [ ] `SEO-GUIDE.md`
+- [x] WebSite schema
+- [x] Organization schema
+- [x] SoftwareApplication schema
+- [x] FAQPage schema on the calculator page
+- [x] ItemList schema on the blog index
+- [x] BlogPosting schema on every blog article
+- [x] BreadcrumbList schema on calculator, blog index, and every blog article
 
-### 4. Analytics Setup
+### Analytics
 
 - [x] Google Analytics 4 tag configured with measurement ID `G-VJV7PD83VN`
-- [x] Add GA tracking code to layout
+- [x] Vercel Analytics is enabled
 
-### 5. Social Media Accounts
+### Technical SEO And Trust
 
-- [ ] Create Facebook page: facebook.com/freelancertaxbd
+- [x] Security headers include HSTS, Permissions-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and CSP
+- [x] Privacy policy page added at `/privacy`
+- [x] Footer privacy link points to `/privacy`
+- [x] PWA manifest includes app shortcuts for calculator and guides
+- [x] Decorative icons used in updated areas are hidden from assistive tech
+
+## Manual Setup Required
+
+### Google Search Console
+
+- [ ] Add property: `https://freelancer-tax-calculator.salmanizhar.com`
+- [ ] Submit sitemap: `https://freelancer-tax-calculator.salmanizhar.com/sitemap.xml`
+- [ ] Request indexing for `/`, `/calculator`, `/blog`, and article URLs
+- [ ] Monitor indexing, Core Web Vitals, and rich result enhancements
+
+### Social Media Accounts
+
+- [ ] Create Facebook page for Freelancer Tax Calculator
 - [ ] Create Twitter/X account for Freelancer Tax Calculator
-- [ ] Update social links in `src/app/layout.tsx` (organizationSchema)
+- [ ] Add real social profile URLs to `organizationSchema.sameAs` after the accounts exist
 
-## Content Creation Tasks
+### External Distribution
 
-### Blog Articles to Write
+- [ ] Submit to relevant Bangladesh freelancer and business directories
+- [ ] Share the calculator in relevant freelancer communities
+- [ ] Pitch existing tax guides to Bangladesh tech/freelance blogs
+- [ ] Track backlinks and referral traffic monthly
 
-- [ ] "How to Pay Tax on Fiverr Income in Bangladesh"
-- [ ] "Upwork Tax Calculator Bangladesh: Complete Guide 2024"
-- [ ] "NBR Tax Filing Guide for Freelancers 2024"
-- [ ] "Bangladesh Tax Deductions for Freelancers"
-- [ ] "Freelancer Tax Planning Strategies Bangladesh"
-- [ ] "Common Tax Mistakes Freelancers Make in Bangladesh"
-- [ ] "How to Get TIN Number in Bangladesh"
-- [ ] "Quarterly Tax Payment Guide for Freelancers"
+## Content Status
 
-### Additional Content
+### Published Or Implemented
 
-- [ ] Create downloadable PDF tax guide
-- [ ] Create video tutorials (YouTube)
-- [ ] Design infographics about tax slabs
-- [ ] Write FAQ section expansion
-- [ ] Create tax calendar/deadline reminders
+- [x] Freelancer income tax beginner guide
+- [x] Fiverr income tax guide
+- [x] Upwork income tax guide
+- [x] Freelancer tax filing guide
+- [x] TIN guide for freelancers
+- [x] Freelancer tax record-keeping guide
+- [x] Complete freelancer tax guide
+- [x] FAQ section on the calculator page
 
-## Technical SEO Tasks
+### Still Worth Creating
 
-### Performance Optimization
+- [ ] Bangladesh tax deductions for freelancers
+- [ ] Freelancer tax planning strategies Bangladesh
+- [ ] Common tax mistakes freelancers make in Bangladesh
+- [ ] Quarterly tax payment guide for freelancers
+- [ ] Downloadable PDF tax guide
+- [ ] Tax calendar/deadline reminder page
+- [ ] Bengali-language version of the core calculator guide
 
-- [ ] Run Google PageSpeed Insights
-- [ ] Optimize Core Web Vitals
-- [ ] Compress all images
-- [ ] Enable CDN (Vercel/Netlify)
-- [ ] Test mobile responsiveness
+## Ongoing Checks
 
-### Accessibility
-
-- [ ] Add alt text to all images
-- [ ] Ensure proper heading hierarchy
-- [ ] Test with screen readers
-- [ ] Add ARIA labels where needed
-- [ ] Check color contrast ratios
-
-### Security
-
-- [ ] Enable HTTPS
-- [ ] Add security headers
-- [ ] Implement CSP (Content Security Policy)
-- [ ] Regular security audits
-
-## Link Building Strategy
-
-### Week 1-2
-
-- [ ] Submit to Bangladesh business directories
-- [ ] Share on Facebook groups (BD Freelancers, Fiverr Bangladesh, etc.)
-- [ ] Post on Reddit (r/bangladesh, r/freelance)
-- [ ] Share on LinkedIn
-- [ ] Submit to Hacker News
-
-### Week 3-4
-
-- [ ] Guest post on Bangladesh tech blogs
-- [ ] Reach out to freelancer influencers
-- [ ] Comment on relevant blog posts
-- [ ] Participate in forums (Quora, Stack Exchange)
-- [ ] Create YouTube channel
-
-### Month 2
-
-- [ ] Partner with freelancer communities
-- [ ] Get featured in Bangladesh tech news
-- [ ] Collaborate with tax professionals
-- [ ] Create shareable tools/calculators
-- [ ] Build email newsletter
-
-## Monitoring & Tracking
-
-### Weekly Checks
-
-- [ ] Google Search Console performance
-- [ ] Keyword rankings
-- [ ] Organic traffic growth
-- [ ] Bounce rate and engagement
-- [ ] Page load speeds
-
-### Monthly Reviews
-
-- [ ] Content performance analysis
-- [ ] Backlink profile check
-- [ ] Competitor analysis
-- [ ] SEO audit
-- [ ] Update content as needed
-
-## High-Priority Keywords to Track
-
-### Primary Keywords (Track Weekly)
-
-- bangladesh tax calculator
-- freelancer tax calculator bangladesh
-- income tax calculator bangladesh
-- nbr tax calculator
-- fiverr tax bangladesh
-- upwork tax calculator bangladesh
-
-### Secondary Keywords (Track Monthly)
-
-- bangladesh tax slab 2024
-- freelancer income tax bd
-- tax calculator bd
-- freelance tax bd
-- self employed tax bangladesh
-- online income tax bangladesh
-
-## Success Metrics
-
-### Month 1 Goals
-
-- [ ] 100+ organic visitors
-- [ ] Rank in top 50 for primary keywords
-- [ ] 10+ backlinks
-- [ ] 5+ blog articles published
-
-### Month 3 Goals
-
-- [ ] 1,000+ organic visitors
-- [ ] Rank in top 20 for primary keywords
-- [ ] 50+ backlinks
-- [ ] 20+ blog articles published
-
-### Month 6 Goals
-
-- [ ] 5,000+ organic visitors
-- [ ] Rank in top 10 for primary keywords
-- [ ] 200+ backlinks
-- [ ] 50+ blog articles published
-- [ ] Featured snippets for key queries
-
-## Notes
-
-- Update this checklist as tasks are completed
-- Review and adjust strategy based on analytics
-- Focus on quality content over quantity
-- Build genuine relationships in the community
-- Stay updated with Google algorithm changes
-
----
-
-**Last Updated:** January 1, 2024
+- [ ] Run Google PageSpeed Insights after deployment
+- [ ] Validate JSON-LD with Google Rich Results Test
+- [ ] Confirm Google Analytics receives live traffic
+- [ ] Check mobile layout after deployment
+- [ ] Review Search Console weekly for indexing or schema warnings
+- [ ] Refresh tax-year-sensitive content when NBR rules change

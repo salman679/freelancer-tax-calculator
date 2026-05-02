@@ -1,19 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArticleJsonLd } from "@/components/ArticleJsonLd";
+import { createArticleMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title:
-    "Complete Freelancer Tax Guide Bangladesh 2024 | NBR Tax Rates & Filing",
-  description:
-    "Ultimate guide to freelancer taxes in Bangladesh. Learn NBR tax slabs 2024, filing requirements, deductions, tax-free threshold, and how to calculate income tax on freelance earnings.",
-  keywords:
-    "freelancer tax guide bangladesh, nbr tax rates 2024, bangladesh tax slab, freelancer tax filing, income tax bangladesh, tax free threshold bd, freelance tax calculation",
-};
+export const metadata: Metadata = createArticleMetadata(
+  "freelancer-tax-guide-bangladesh"
+);
 
 export default function FreelancerTaxGuidePage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <ArticleJsonLd slug="freelancer-tax-guide-bangladesh" />
       <header className="bg-white border-b shadow-sm">
         <div className="py-4 container-custom">
           <Link

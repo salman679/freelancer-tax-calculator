@@ -1,41 +1,15 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { JsonLd } from "@/components/JsonLd";
 import CalculatorForm from "@/components/CalculatorForm";
+import { createBreadcrumbSchema, createMetadata } from "@/lib/seo";
 
-const baseUrl = "https://freelancer-tax-calculator.salmanizhar.com";
-
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title:
     "Freelancer Tax Calculator in Bangladesh (2025) | Income Tax Calculator for Freelancers",
   description:
     "Estimate freelancing income tax in Bangladesh with a simple calculator and clear guide. Learn who should file, how tax is calculated, common mistakes, and FAQs for freelancers.",
-  alternates: {
-    canonical: `${baseUrl}/calculator`,
-  },
-  openGraph: {
-    title: "Freelancer Tax Calculator in Bangladesh (2025)",
-    description:
-      "A Bangladesh-focused freelancer tax calculator with a practical guide, examples, and FAQs. Get an estimate and understand next steps.",
-    url: `${baseUrl}/calculator`,
-    siteName: "Freelancer Tax Calculator",
-    type: "website",
-    images: [
-      {
-        url: `${baseUrl}/og-image.svg`,
-        width: 1200,
-        height: 630,
-        alt: "Freelancer Tax Calculator in Bangladesh",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Freelancer Tax Calculator in Bangladesh (2025)",
-    description:
-      "Estimate freelancing income tax in Bangladesh with a helpful guide, examples, and FAQs.",
-    images: [`${baseUrl}/twitter-image.svg`],
-  },
-};
+  path: "/calculator",
+});
 
 const faqItems = [
   {
@@ -106,10 +80,16 @@ const faqSchema = {
 export default function CalculatorPage() {
   return (
     <div className="bg-gray-50">
-      <Script
+      <JsonLd
         id="faq-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        data={faqSchema}
+      />
+      <JsonLd
+        id="calculator-breadcrumb-schema"
+        data={createBreadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Calculator", path: "/calculator" },
+        ])}
       />
 
       <section className="bg-white border-b">
