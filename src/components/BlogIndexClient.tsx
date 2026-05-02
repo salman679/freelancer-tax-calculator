@@ -16,41 +16,13 @@ import {
 import { type BlogArticle, blogArticles } from "@/lib/seo";
 
 const visualStyles = [
-  {
-    frame: "border-[#a8dcc3] bg-[#e8f7ef] text-[#0f6b43]",
-    chip: "bg-[#d9f3e6] text-[#0f6b43]",
-    line: "bg-[#14935f]",
-  },
-  {
-    frame: "border-[#a9c9ee] bg-[#e8f1fb] text-[#125a94]",
-    chip: "bg-[#d9eafa] text-[#125a94]",
-    line: "bg-[#1f74b7]",
-  },
-  {
-    frame: "border-[#edcf8f] bg-[#fff4d8] text-[#8a570f]",
-    chip: "bg-[#f9e7b7] text-[#8a570f]",
-    line: "bg-[#c77810]",
-  },
-  {
-    frame: "border-[#d2c1f0] bg-[#f0eafb] text-[#5f3aa3]",
-    chip: "bg-[#e4d8f8] text-[#5f3aa3]",
-    line: "bg-[#7a4fd1]",
-  },
-  {
-    frame: "border-[#e9b9c5] bg-[#fff0f3] text-[#9b3651]",
-    chip: "bg-[#f8dce4] text-[#9b3651]",
-    line: "bg-[#c44d68]",
-  },
-  {
-    frame: "border-[#a7dce3] bg-[#e8f8fa] text-[#0d6873]",
-    chip: "bg-[#d7f0f3] text-[#0d6873]",
-    line: "bg-[#168996]",
-  },
-  {
-    frame: "border-[#b8d99f] bg-[#eff8e6] text-[#4f7418]",
-    chip: "bg-[#e0f0d2] text-[#4f7418]",
-    line: "bg-[#75a925]",
-  },
+  "from-primary-100 via-blue-50 to-white text-primary-700 border-primary-100",
+  "from-purple-100 via-indigo-50 to-white text-purple-700 border-purple-100",
+  "from-success-100 via-green-50 to-white text-success-600 border-success-100",
+  "from-warning-100 via-yellow-50 to-white text-warning-600 border-warning-100",
+  "from-danger-100 via-red-50 to-white text-danger-600 border-danger-100",
+  "from-cyan-100 via-sky-50 to-white text-cyan-700 border-cyan-100",
+  "from-slate-100 via-gray-50 to-white text-slate-700 border-slate-200",
 ];
 
 const iconBySlug = {
@@ -72,12 +44,12 @@ const guideStats = [
   {
     value: "05",
     label: "Tax topics",
-    detail: "Grouped by real freelancer tasks",
+    detail: "Grouped by freelancer tasks",
   },
   {
     value: "30s",
     label: "Calculator",
-    detail: "Read, estimate, then prepare",
+    detail: "Read, estimate, prepare",
   },
 ];
 
@@ -108,34 +80,30 @@ function ArticleVisual({
 
   return (
     <div
-      className={`relative overflow-hidden border ${style.frame} ${
-        size === "large" ? "min-h-[260px]" : "aspect-[16/10]"
+      className={`relative overflow-hidden border bg-gradient-to-br ${style} ${
+        size === "large" ? "min-h-[250px]" : "aspect-[16/10]"
       }`}
     >
-      <div className="absolute inset-0 opacity-55 [background-image:linear-gradient(rgba(15,23,42,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,.08)_1px,transparent_1px)] [background-size:28px_28px]" />
-      <div className="absolute left-5 top-5 font-serif text-6xl leading-none text-slate-950/10 sm:text-7xl">
+      <div className="absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_16px_16px,rgba(255,255,255,.9)_2px,transparent_2px)] [background-size:30px_30px]" />
+      <div className="absolute left-5 top-5 text-5xl font-bold leading-none text-slate-950/10 sm:text-6xl">
         {articleNumber}
       </div>
-      <div className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-lg border border-current/20 bg-white/70 shadow-sm">
-        <Icon className="h-6 w-6" aria-hidden="true" />
+      <div className="absolute right-5 top-5 flex h-14 w-14 items-center justify-center rounded-lg bg-white/85 shadow-sm">
+        <Icon className="h-7 w-7" aria-hidden="true" />
       </div>
 
-      <div className="absolute bottom-5 left-5 right-5 rounded-lg border border-white/70 bg-white/72 p-4 shadow-[0_16px_35px_-28px_rgba(15,23,42,0.5)] backdrop-blur">
+      <div className="absolute bottom-5 left-5 right-5 rounded-lg border border-white/70 bg-white/80 p-4 shadow-sm backdrop-blur">
         <div className="flex items-center justify-between gap-3">
-          <span
-            className={`rounded-full px-2.5 py-1 text-[11px] font-bold uppercase ${style.chip}`}
-          >
+          <span className="rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-700 shadow-sm">
             {article.category}
           </span>
           <span className="text-xs font-semibold text-slate-500">
             {article.readTime}
           </span>
         </div>
-        <div className="mt-4 space-y-2">
-          <span className={`block h-1.5 w-2/3 rounded-full ${style.line}`} />
-          <span className="block h-1.5 w-full rounded-full bg-slate-900/10" />
-          <span className="block h-1.5 w-5/6 rounded-full bg-slate-900/10" />
-        </div>
+        <p className="mt-4 max-w-[14rem] text-lg font-bold leading-tight text-slate-950">
+          Bangladesh freelancer tax guide
+        </p>
       </div>
     </div>
   );
@@ -153,31 +121,31 @@ function FeaturedArticleCard({
   return (
     <Link
       href={`/blog/${article.slug}`}
-      className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14935f] focus-visible:ring-offset-2"
+      className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
     >
-      <article className="grid h-full overflow-hidden rounded-lg border border-[#d9cfbd] bg-[#fffdf7] shadow-[0_24px_70px_-42px_rgba(54,45,30,0.55)] transition duration-200 hover:-translate-y-1 hover:border-[#14935f]/50 hover:shadow-[0_30px_80px_-42px_rgba(54,45,30,0.68)] lg:grid-cols-[0.86fr_1.14fr]">
+      <article className="grid h-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-xl lg:grid-cols-[0.9fr_1.1fr]">
         <ArticleVisual article={article} index={index} size="large" />
         <div className="flex flex-col p-6 sm:p-7">
           <div className="flex items-center justify-between gap-4">
-            <span className="font-serif text-5xl leading-none text-[#14935f]">
+            <span className="text-4xl font-bold leading-none text-primary-600">
               {articleNumber}
             </span>
-            <span className="rounded-full border border-[#d9cfbd] bg-[#f6efdf] px-3 py-1.5 text-xs font-bold uppercase text-[#6b5735]">
+            <span className="rounded-full bg-primary-100 px-3 py-1.5 text-xs font-bold uppercase text-primary-700">
               Priority read
             </span>
           </div>
-          <h2 className="mt-7 text-2xl font-bold leading-tight text-slate-950 transition-colors group-hover:text-[#0f6b43] sm:text-3xl">
+          <h2 className="mt-7 text-2xl font-bold leading-tight text-gray-900 transition-colors group-hover:text-primary-700 sm:text-3xl">
             {article.title}
           </h2>
-          <p className="mt-4 flex-1 leading-7 text-slate-600">
+          <p className="mt-4 flex-1 leading-7 text-gray-600">
             {article.description}
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-[#e4dac8] pt-4 text-sm text-slate-600">
+          <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-4 text-sm text-gray-500">
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="h-4 w-4" aria-hidden="true" />
               {formatDisplayDate(article.dateModified)}
             </span>
-            <span className="inline-flex items-center gap-1.5 font-bold text-[#0f6b43]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-primary-700">
               Open guide
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
             </span>
@@ -200,28 +168,28 @@ function ArticleCard({
   return (
     <Link
       href={`/blog/${article.slug}`}
-      className="group block h-full rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14935f] focus-visible:ring-offset-2"
+      className="group block h-full rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
     >
-      <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#ded3c0] bg-[#fffdf8] shadow-[0_18px_50px_-38px_rgba(54,45,30,0.45)] transition duration-200 hover:-translate-y-1 hover:border-[#14935f]/45 hover:shadow-[0_28px_70px_-44px_rgba(54,45,30,0.62)]">
+      <article className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary-200 hover:shadow-xl">
         <ArticleVisual article={article} index={index} />
         <div className="flex flex-1 flex-col p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
-            <span className="font-serif text-4xl leading-none text-slate-950/20">
+            <span className="text-3xl font-bold leading-none text-primary-100">
               {articleNumber}
             </span>
-            <span className="rounded-full border border-[#ded3c0] bg-[#f6efdf] px-3 py-1 text-xs font-bold text-[#6b5735]">
+            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
               {article.category}
             </span>
           </div>
-          <h3 className="mt-5 text-xl font-bold leading-snug text-slate-950 transition-colors group-hover:text-[#0f6b43]">
+          <h3 className="mt-5 text-xl font-bold leading-snug text-gray-900 transition-colors group-hover:text-primary-700">
             {article.title}
           </h3>
-          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-6 text-slate-600">
+          <p className="mt-3 line-clamp-3 flex-1 text-sm leading-6 text-gray-600">
             {article.description}
           </p>
-          <div className="mt-6 flex items-center justify-between border-t border-[#e4dac8] pt-4 text-xs text-slate-600">
+          <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4 text-xs text-gray-500">
             <span>{article.readTime}</span>
-            <span className="inline-flex items-center gap-1 font-bold text-[#0f6b43]">
+            <span className="inline-flex items-center gap-1 font-semibold text-primary-700">
               Read
               <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden="true" />
             </span>
@@ -232,42 +200,41 @@ function ArticleCard({
   );
 }
 
-function ReadingDesk() {
-  const deskArticles = blogArticles.slice(0, 4);
+function ReadingPath() {
+  const pathArticles = blogArticles.slice(0, 4);
 
   return (
-    <div className="relative overflow-hidden rounded-lg border border-[#d8c9ad] bg-[#fffdf7] p-5 shadow-[0_28px_80px_-48px_rgba(54,45,30,0.65)]">
-      <div className="absolute inset-x-0 top-0 h-2 bg-[repeating-linear-gradient(90deg,#14935f_0_56px,#f0b747_56px_84px,#1f74b7_84px_140px)]" />
-      <div className="mt-3 flex items-center justify-between border-b border-[#e4dac8] pb-4">
+    <div className="rounded-lg border border-gray-200 bg-white/80 p-5 shadow-xl backdrop-blur-sm">
+      <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <div>
-          <p className="text-xs font-bold uppercase text-[#7a6846]">
+          <p className="text-xs font-bold uppercase tracking-wide text-primary-700">
             Reading order
           </p>
-          <h2 className="mt-1 text-xl font-bold text-slate-950">
+          <h2 className="mt-1 text-xl font-bold text-gray-900">
             Start here before filing
           </h2>
         </div>
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#10251d] text-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-purple-600 text-white">
           <Calculator className="h-6 w-6" aria-hidden="true" />
         </div>
       </div>
 
       <div className="mt-5 space-y-3">
-        {deskArticles.map((article, index) => (
+        {pathArticles.map((article, index) => (
           <Link
             key={article.slug}
             href={`/blog/${article.slug}`}
-            className="group grid grid-cols-[3rem_1fr] gap-3 rounded-lg border border-transparent p-2 transition hover:border-[#d8c9ad] hover:bg-[#f8f0df]"
+            className="group grid grid-cols-[3rem_1fr] gap-3 rounded-lg border border-transparent p-2 transition hover:border-primary-100 hover:bg-primary-50"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-[#d8c9ad] bg-[#f6efdf] font-serif text-xl text-[#0f6b43]">
+            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-100 text-lg font-bold text-primary-700">
               {getArticleNumber(index)}
             </span>
             <span>
-              <span className="block text-sm font-bold leading-5 text-slate-950 group-hover:text-[#0f6b43]">
+              <span className="block text-sm font-bold leading-5 text-gray-900 group-hover:text-primary-700">
                 {article.title}
               </span>
-              <span className="mt-1 block text-xs font-semibold text-slate-500">
-                {article.category} · {article.readTime}
+              <span className="mt-1 block text-xs font-semibold text-gray-500">
+                {article.category} - {article.readTime}
               </span>
             </span>
           </Link>
@@ -300,33 +267,33 @@ export default function BlogIndexClient() {
   const featuredArticles = blogArticles.slice(0, 2);
 
   return (
-    <div className="bg-[#f3ead9] text-slate-950">
-      <section className="relative overflow-hidden border-b border-[#d8c9ad] bg-[#f7f1e6] py-14 lg:py-20">
-        <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(54,45,30,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(54,45,30,.07)_1px,transparent_1px)] [background-size:34px_34px]" />
+    <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 text-gray-900">
+      <section className="relative overflow-hidden border-b border-gray-200 py-14 lg:py-20">
+        <div className="absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_20px_20px,rgba(14,165,233,.14)_2px,transparent_2px)] [background-size:36px_36px]" />
         <div className="container-custom relative">
-          <div className="grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
-              <span className="inline-flex rounded-full border border-[#d8c9ad] bg-[#fffdf7] px-4 py-2 text-sm font-bold text-[#0f6b43] shadow-sm">
+              <span className="inline-flex rounded-full bg-primary-100 px-4 py-2 text-sm font-semibold text-primary-700">
                 Bangladesh freelancer tax library
               </span>
-              <h1 className="mt-6 max-w-4xl font-serif text-4xl font-bold leading-tight text-slate-950 sm:text-5xl lg:text-7xl">
+              <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">
                 Numbered tax guides for freelancers who need a filing plan.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700 sm:text-xl">
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600 sm:text-xl">
                 Read the guides in order, jump to your platform, then use the
                 calculator with the records you have already prepared.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="#articles"
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#10251d] px-5 text-sm font-bold text-white transition hover:bg-[#183a2e]"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 text-sm font-semibold text-white transition hover:bg-primary-700"
                 >
                   Browse numbered guides
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/calculator"
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[#bdaa8b] bg-[#fffdf7] px-5 text-sm font-bold text-[#5c4828] transition hover:border-[#0f6b43] hover:text-[#0f6b43]"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-gray-200 bg-white px-5 text-sm font-semibold text-gray-700 transition hover:border-primary-300 hover:text-primary-700"
                 >
                   Open calculator
                 </Link>
@@ -335,15 +302,15 @@ export default function BlogIndexClient() {
                 {guideStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-lg border border-[#d8c9ad] bg-[#fffdf7]/82 p-4 shadow-sm"
+                    className="rounded-lg border border-gray-200 bg-white/70 p-4 shadow-sm backdrop-blur-sm"
                   >
-                    <div className="font-serif text-4xl font-bold leading-none text-[#0f6b43]">
+                    <div className="text-3xl font-bold leading-none text-primary-600">
                       {stat.value}
                     </div>
-                    <div className="mt-2 text-sm font-bold text-slate-950">
+                    <div className="mt-2 text-sm font-bold text-gray-900">
                       {stat.label}
                     </div>
-                    <p className="mt-1 text-xs leading-5 text-slate-600">
+                    <p className="mt-1 text-xs leading-5 text-gray-600">
                       {stat.detail}
                     </p>
                   </div>
@@ -351,12 +318,12 @@ export default function BlogIndexClient() {
               </div>
             </div>
 
-            <ReadingDesk />
+            <ReadingPath />
           </div>
         </div>
       </section>
 
-      <section className="sticky top-0 z-20 border-b border-[#d8c9ad] bg-[#fffdf7]/94 py-4 backdrop-blur">
+      <section className="sticky top-[118px] z-20 border-b border-gray-200 bg-white/90 py-4 backdrop-blur md:top-[72px]">
         <div className="container-custom">
           <div className="flex gap-2 overflow-x-auto pb-1">
             {categoryTabs.map((item) => (
@@ -364,14 +331,14 @@ export default function BlogIndexClient() {
                 key={item.category}
                 type="button"
                 onClick={() => setSelectedCategory(item.category)}
-                className={`min-h-[44px] shrink-0 cursor-pointer rounded-lg border px-3 text-sm font-bold transition ${
+                className={`min-h-[44px] shrink-0 cursor-pointer rounded-lg border px-3 text-sm font-semibold transition ${
                   selectedCategory === item.category
-                    ? "border-[#10251d] bg-[#10251d] text-white"
-                    : "border-[#d8c9ad] bg-[#f8f0df] text-[#5c4828] hover:border-[#0f6b43] hover:text-[#0f6b43]"
+                    ? "border-primary-600 bg-primary-600 text-white"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-primary-300 hover:text-primary-700"
                 }`}
               >
                 <span>{item.category}</span>
-                <span className="ml-2 font-serif text-base">
+                <span className="ml-2 text-base font-bold">
                   {String(item.count).padStart(2, "0")}
                 </span>
               </button>
@@ -381,18 +348,18 @@ export default function BlogIndexClient() {
       </section>
 
       {selectedCategory === "All" && (
-        <section className="border-b border-[#d8c9ad] bg-[#efe3cf] py-14 lg:py-20">
+        <section className="border-b border-gray-200 bg-white py-14 lg:py-20">
           <div className="container-custom">
             <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
               <div>
-                <p className="text-xs font-bold uppercase text-[#0f6b43]">
+                <p className="text-xs font-bold uppercase tracking-wide text-primary-700">
                   First two reads
                 </p>
-                <h2 className="mt-3 font-serif text-4xl font-bold leading-tight text-slate-950">
+                <h2 className="mt-3 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
                   Build the baseline before choosing platform-specific advice.
                 </h2>
               </div>
-              <p className="max-w-2xl leading-7 text-slate-700 lg:justify-self-end">
+              <p className="max-w-2xl leading-7 text-gray-600 lg:justify-self-end">
                 The first guides set the tax vocabulary, then the platform and
                 compliance guides help you prepare numbers, TIN details, and
                 documents for filing.
@@ -412,19 +379,19 @@ export default function BlogIndexClient() {
         </section>
       )}
 
-      <section id="articles" className="bg-[#f7f1e6] py-14 lg:py-20">
+      <section id="articles" className="bg-gray-50 py-14 lg:py-20">
         <div className="container-custom">
-          <div className="flex flex-col gap-4 border-b border-[#d8c9ad] pb-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex flex-col gap-4 border-b border-gray-200 pb-8 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-bold uppercase text-[#0f6b43]">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary-700">
                 Article index
               </p>
-              <h2 className="mt-3 font-serif text-4xl font-bold tracking-normal text-slate-950">
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {selectedCategory === "All"
                   ? "Every guide, numbered by reading priority"
                   : `${selectedCategory} guides`}
               </h2>
-              <p className="mt-3 text-slate-700">
+              <p className="mt-3 text-gray-600">
                 Showing {String(filteredArticles.length).padStart(2, "0")} of{" "}
                 {String(blogArticles.length).padStart(2, "0")} guides.
               </p>
@@ -433,7 +400,7 @@ export default function BlogIndexClient() {
               <button
                 type="button"
                 onClick={() => setSelectedCategory("All")}
-                className="min-h-[44px] cursor-pointer rounded-lg border border-[#d8c9ad] bg-[#fffdf7] px-4 text-sm font-bold text-[#5c4828] transition hover:border-[#0f6b43] hover:text-[#0f6b43]"
+                className="min-h-[44px] cursor-pointer rounded-lg border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:border-primary-300 hover:text-primary-700"
               >
                 View all 07 guides
               </button>
@@ -458,24 +425,24 @@ export default function BlogIndexClient() {
         </div>
       </section>
 
-      <section className="border-t border-[#d8c9ad] bg-[#10251d] py-14 text-white">
+      <section className="bg-gradient-to-br from-primary-600 to-purple-600 py-14 text-white">
         <div className="container-custom">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-xs font-bold uppercase text-[#9de0bf]">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary-100">
                 Next step
               </p>
-              <h2 className="mt-3 max-w-3xl font-serif text-4xl font-bold leading-tight">
+              <h2 className="mt-3 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl">
                 Finished a guide? Turn the numbers into an estimate.
               </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-white/72">
+              <p className="mt-3 max-w-2xl leading-7 text-primary-100">
                 Use your platform income, expenses, and records to check filing
                 risk before you prepare the full return.
               </p>
             </div>
             <Link
               href="/calculator"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[#f0b747] px-5 text-sm font-bold text-[#10251d] transition hover:bg-[#ffd26c]"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-white px-5 text-sm font-semibold text-primary-700 transition hover:bg-primary-50"
             >
               Estimate my tax
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

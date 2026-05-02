@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
+import { SiteNavbar } from "@/components/SiteNavbar";
 import { createBreadcrumbSchema, createMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
@@ -21,17 +20,7 @@ export default function PrivacyPage() {
           { name: "Privacy Policy", path: "/privacy" },
         ])}
       />
-      <header className="bg-white border-b shadow-sm">
-        <div className="py-4 container-custom">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 font-semibold text-primary-600 hover:text-primary-700"
-          >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-            Back to Calculator
-          </Link>
-        </div>
-      </header>
+      <SiteNavbar />
 
       <main className="py-16">
         <article className="max-w-3xl container-custom">

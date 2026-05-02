@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import CalculatorForm from "@/components/CalculatorForm";
+import { SiteNavbar } from "@/components/SiteNavbar";
 import { createBreadcrumbSchema, createMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
@@ -91,6 +92,7 @@ export default function CalculatorPage() {
           { name: "Calculator", path: "/calculator" },
         ])}
       />
+      <SiteNavbar />
 
       <section className="bg-white border-b">
         <div className="py-10 container-custom">

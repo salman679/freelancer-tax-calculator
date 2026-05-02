@@ -24,6 +24,7 @@ import {
 } from "@/lib/tax-calculator";
 import Link from "next/link";
 import { PaidResult } from "@/components/PaidResult";
+import { SiteNavbar } from "@/components/SiteNavbar";
 
 type CalculationStep = "input" | "result";
 
@@ -97,38 +98,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-40 border-b shadow-sm bg-white/80 backdrop-blur-md">
-        <div className="py-4 container-custom">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-primary-600 to-purple-600">
-                <Calculator className="w-6 h-6 text-white" aria-hidden="true" />
-              </div>
-              <span className="text-lg font-bold text-transparent bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text sm:text-xl">
-                <span className="sm:hidden">Freelancer Tax</span>
-                <span className="hidden sm:inline">
-                  Freelancer Tax Calculator
-                </span>
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => {
-                  document
-                    .getElementById("calculator-section")
-                    ?.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                }}
-                className="btn-primary"
-              >
-                Calculate Now
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteNavbar />
 
       {/* Hero Section */}
       <section className="py-12 lg:py-20">

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowLeft, Calculator, DollarSign } from "lucide-react";
-import Link from "next/link";
+import { DollarSign } from "lucide-react";
 import {
   calculateTax,
   type TaxInput,
@@ -83,29 +82,6 @@ export default function CalculatorForm() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b shadow-sm">
-        <div className="py-4 container-custom">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-            >
-              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-              <span>Back to Home</span>
-            </Link>
-            <div className="flex items-center space-x-2">
-              <Calculator
-                className="w-6 h-6 text-primary-600"
-                aria-hidden="true"
-              />
-              <span className="font-semibold text-gray-900">
-                Tax Calculator
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="py-8 container-custom">
         {step === "input" && (
           <div className="max-w-2xl mx-auto">
